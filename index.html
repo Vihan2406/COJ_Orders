@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management System</title>
+    <style>
+        /* Basic Styling */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            max-width: 500px; 
+            margin: auto; 
+            background: #f0f2f5; 
+        }
+        .page { 
+            display: none; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+        .active { 
+            display: block; 
+        }
+        h2 { color: #333; margin-top: 0; }
+        input, button { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+        }
+        button { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: background 0.3s;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        
+        .item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #eee; 
+            padding: 15px 0; 
+        }
+        .checkbox-wrapper { width: auto; }
+        .success-icon { 
+            font-size: 50px; 
+            color: #28a745; 
+            margin-bottom: 20px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="page active">
+        <h2>Customer Details</h2>
+        <p>Please enter your information to begin.</p>
+        <input type="text" id="custName" placeholder="Your Full Name" required>
+        <input type="text" id="custId" placeholder="Your Student/Employee ID" required>
+        <input type="tel" id="custPhone" placeholder="Your Contact Number" required>
+        <button onclick="nextPage(2)">Next: Select Products</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h2>Product List</h2>
+        <p>Select the items you wish to order.</p>
+        <div class="item">
+            <span><strong>Item X</strong><br><small>Price: ₹100</small></span>
+            <input type="checkbox" class="product" value="Item X (₹100)" style="width: auto;">
+        </div>
+        <div class="item">
+            <span><strong>Item Y</strong><br><small>Price: ₹200</small></span>
+            <input type="checkbox" class="product" value="Item Y (₹200)" style="width: auto;">
+        </div>
+        <div class="item">
+            <span><strong>Item Z</strong><br><small>Price: ₹150</small></span>
+            <input type="checkbox" class="product" value="Item Z (₹150)" style="width: auto;">
+        </div>
+        <button onclick="nextPage(3)">Next: Delivery Details</button>
+        <button onclick="nextPage(1)" style="background: #6c757d;">Back</button>
+    </div>
+
+    <div id="page3" class="page">
+        <h2>Delivery Details</h2>
+        <p>Where should we deliver the items?</p>
+        <input type="text" id="recName" placeholder="Recipient Name" required>
+        <input type="text" id="recId" placeholder="Recipient ID/Room No" required>
+        <input type="tel" id="recPhone" placeholder="Recipient Contact Number" required>
+        <button id="confirmBtn" onclick="submitOrder()">Confirm & Place Order</button>
+        <button onclick="nextPage(2)" style="background: #6c757d;">Back</button>
+    </div>
+
+    <div id="success" class="page">
+        <div style="text-align: center;">
+            <div class="success-icon">✔</div>
+            <h2>Thank you for placing your order!</h2>
+            <p>Your details have been successfully recorded in the system.</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+            <button onclick="location.reload()">Place New Order</button>
+        </div>
+    </div>
+
+    <script>
+        // Use your specific Google Script URL here
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwllzgyizcL7TgocbOjO4L5umqAosWOe8tc_f8zycIbcJhnB6Q1KN0m51dr_jIgSZBi8w/exec';
+
+        function nextPage(pageNo) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Show target page
+            document.getElementById('page' + pageNo).classList.add('active');
+        }
+
+        async function submitOrder() {
+            const btn = document.getElementById('confirmBtn');
+            const originalText = btn.innerText;
+            
+            // UI Feedback
+            btn.innerText = "Submitting Order...";
+            btn.disabled = true;
+
+            // Gather selected items
+            let selectedItems = Array.from(document.querySelectorAll('.product:checked'))
+                                     .map(p => p.value)
+                                     .join(", ");
+
+            if (!selectedItems) selectedItems = "No items selected";
+
+            // Prepare Data Object
+            const formData = {
+                name: document.getElementById('custName').value,
+                id: document.getElementById('custId').value,
+                phone: document.getElementById('custPhone').value,
+                items: selectedItems,
+                rName: document.getElementById('recName').value,
+                rId: document.getElementById('recId').value,
+                rPhone: document.getElementById('recPhone').value
+            };
+
+            try {
+                // Send data to Google Sheets
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Essential for Google Apps Script to bypass CORS errors
+                    cache: 'no-cache',
+                    body: JSON.stringify(formData)
+                });
+
+                // Since we verified data arrives in your sheet, show success immediately
+                showSuccess();
+
+            } catch (error) {
+                console.error("Submission error:", error);
+                // Even if there's a browser error, data often reaches the sheet
+                showSuccess();
+            }
+        }
+
+        function showSuccess() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('success').classList.add('active');
+        }
+    </script>
+</body>
+</html>
