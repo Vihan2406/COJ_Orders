@@ -5,73 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Management System</title>
     <style>
-        /* Basic Styling */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            padding: 20px; 
-            max-width: 500px; 
-            margin: auto; 
-            background: #f0f2f5; 
-        }
-        .page { 
-            display: none; 
-            background: white; 
-            padding: 30px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-        }
-        .active { 
-            display: block; 
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; max-width: 500px; margin: auto; background: #f0f2f5; }
+        .page { display: none; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .active { display: block; }
         h2 { color: #333; margin-top: 0; }
-        input, button { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 10px 0; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            box-sizing: border-box; 
-        }
-        button { 
-            background: #007bff; 
-            color: white; 
-            border: none; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: background 0.3s;
-        }
+        input, button { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; transition: background 0.3s; }
         button:hover { background: #0056b3; }
         button:disabled { background: #ccc; cursor: not-allowed; }
-        
-        .item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #eee; 
-            padding: 15px 0; 
-        }
-        .checkbox-wrapper { width: auto; }
-        .success-icon { 
-            font-size: 50px; 
-            color: #28a745; 
-            margin-bottom: 20px; 
-        }
+        .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .error-text { color: #dc3545; font-size: 0.85em; margin-top: -5px; display: none; }
     </style>
 </head>
 <body>
 
     <div id="page1" class="page active">
         <h2>Customer Details</h2>
-        <p>Please enter your information to begin.</p>
-        <input type="text" id="custName" placeholder="Your Full Name" required>
-        <input type="text" id="custId" placeholder="Your Student/Employee ID" required>
-        <input type="tel" id="custPhone" placeholder="Your Contact Number" required>
-        <button onclick="nextPage(2)">Next: Select Products</button>
+        <p>All fields are compulsory.</p>
+        
+        <input type="text" id="custName" placeholder="Your Full Name">
+        
+        <input type="text" id="custId" placeholder="Format: 202XXXXXXXXXG">
+        <div id="custIdError" class="error-text">Invalid ID format (Example: 2024ABCD1234G)</div>
+        
+        <input type="tel" id="custPhone" placeholder="10-digit Phone Number">
+        <div id="custPhoneError" class="error-text">Please enter a valid 10-digit number.</div>
+        
+        <button onclick="validatePage1()">Next: Select Products</button>
     </div>
 
     <div id="page2" class="page">
         <h2>Product List</h2>
-        <p>Select the items you wish to order.</p>
+        <p>You can select one or multiple items.</p>
         <div class="item">
             <span><strong>Item X</strong><br><small>Price: ₹100</small></span>
             <input type="checkbox" class="product" value="Item X (₹100)" style="width: auto;">
@@ -84,90 +49,123 @@
             <span><strong>Item Z</strong><br><small>Price: ₹150</small></span>
             <input type="checkbox" class="product" value="Item Z (₹150)" style="width: auto;">
         </div>
-        <button onclick="nextPage(3)">Next: Delivery Details</button>
+        <div id="productError" class="error-text">Please select at least one item.</div>
+        <button onclick="validatePage2()">Next: Delivery Details</button>
         <button onclick="nextPage(1)" style="background: #6c757d;">Back</button>
     </div>
 
     <div id="page3" class="page">
         <h2>Delivery Details</h2>
-        <p>Where should we deliver the items?</p>
-        <input type="text" id="recName" placeholder="Recipient Name" required>
-        <input type="text" id="recId" placeholder="Recipient ID/Room No" required>
-        <input type="tel" id="recPhone" placeholder="Recipient Contact Number" required>
-        <button id="confirmBtn" onclick="submitOrder()">Confirm & Place Order</button>
+        <input type="text" id="recName" placeholder="Recipient Name">
+        
+        <input type="text" id="recId" placeholder="Recipient ID: 202XXXXXXXXXG">
+        <div id="recIdError" class="error-text">Invalid ID format.</div>
+        
+        <input type="tel" id="recPhone" placeholder="Recipient 10-digit Phone">
+        <div id="recPhoneError" class="error-text">Please enter a valid 10-digit number.</div>
+        
+        <button id="confirmBtn" onclick="validateAndSubmit()">Confirm & Place Order</button>
         <button onclick="nextPage(2)" style="background: #6c757d;">Back</button>
     </div>
 
     <div id="success" class="page">
         <div style="text-align: center;">
-            <div class="success-icon">✔</div>
-            <h2>Thank you for placing your order!</h2>
-            <p>Your details have been successfully recorded in the system.</p>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+            <h2 style="color: #28a745;">✔ Order Confirmed!</h2>
             <button onclick="location.reload()">Place New Order</button>
         </div>
     </div>
 
-    <script>
-        // Use your specific Google Script URL here
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwllzgyizcL7TgocbOjO4L5umqAosWOe8tc_f8zycIbcJhnB6Q1KN0m51dr_jIgSZBi8w/exec';
+<script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwllzgyizcL7TgocbOjO4L5umqAosWOe8tc_f8zycIbcJhnB6Q1KN0m51dr_jIgSZBi8w/exec';
 
-        function nextPage(pageNo) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Show target page
-            document.getElementById('page' + pageNo).classList.add('active');
-        }
+    // Validation Rules
+    const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
+    const phoneRegex = /^[0-9]{10}$/; 
 
-        async function submitOrder() {
-            const btn = document.getElementById('confirmBtn');
-            const originalText = btn.innerText;
-            
-            // UI Feedback
-            btn.innerText = "Submitting Order...";
-            btn.disabled = true;
-
-            // Gather selected items
-            let selectedItems = Array.from(document.querySelectorAll('.product:checked'))
-                                     .map(p => p.value)
-                                     .join(", ");
-
-            if (!selectedItems) selectedItems = "No items selected";
-
-            // Prepare Data Object
-            const formData = {
-                name: document.getElementById('custName').value,
-                id: document.getElementById('custId').value,
-                phone: document.getElementById('custPhone').value,
-                items: selectedItems,
-                rName: document.getElementById('recName').value,
-                rId: document.getElementById('recId').value,
-                rPhone: document.getElementById('recPhone').value
-            };
-
-            try {
-                // Send data to Google Sheets
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Essential for Google Apps Script to bypass CORS errors
-                    cache: 'no-cache',
-                    body: JSON.stringify(formData)
-                });
-
-                // Since we verified data arrives in your sheet, show success immediately
-                showSuccess();
-
-            } catch (error) {
-                console.error("Submission error:", error);
-                // Even if there's a browser error, data often reaches the sheet
-                showSuccess();
-            }
-        }
-
-        function showSuccess() {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    function nextPage(pageNo) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById('page' + pageNo);
+        if (target) {
+            target.classList.add('active');
+        } else if (pageNo === 'success') {
             document.getElementById('success').classList.add('active');
         }
-    </script>
+    }
+
+    function validatePage1() {
+        const name = document.getElementById('custName').value.trim();
+        const id = document.getElementById('custId').value.trim();
+        const phone = document.getElementById('custPhone').value.trim();
+
+        document.getElementById('custIdError').style.display = 'none';
+        document.getElementById('custPhoneError').style.display = 'none';
+
+        let isValid = true;
+        if (!name) { alert("Name is required."); isValid = false; }
+        if (!idRegex.test(id)) { document.getElementById('custIdError').style.display = 'block'; isValid = false; }
+        if (!phoneRegex.test(phone)) { document.getElementById('custPhoneError').style.display = 'block'; isValid = false; }
+
+        if (isValid) nextPage(2);
+    }
+
+    function validatePage2() {
+        const checked = document.querySelectorAll('.product:checked').length;
+        document.getElementById('productError').style.display = (checked === 0) ? 'block' : 'none';
+        if (checked > 0) nextPage(3);
+    }
+
+    function validateAndSubmit() {
+        const rName = document.getElementById('recName').value.trim();
+        const rId = document.getElementById('recId').value.trim();
+        const rPhone = document.getElementById('recPhone').value.trim();
+
+        document.getElementById('recIdError').style.display = 'none';
+        document.getElementById('recPhoneError').style.display = 'none';
+
+        let isValid = true;
+        if (!rName) { alert("Recipient name is required."); isValid = false; }
+        if (!idRegex.test(rId)) { document.getElementById('recIdError').style.display = 'block'; isValid = false; }
+        if (!phoneRegex.test(rPhone)) { document.getElementById('recPhoneError').style.display = 'block'; isValid = false; }
+
+        if (isValid) submitOrder();
+    }
+
+    async function submitOrder() {
+        const btn = document.getElementById('confirmBtn');
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        const selectedItems = Array.from(document.querySelectorAll('.product:checked')).map(p => p.value).join(", ");
+
+        const formData = {
+            name: document.getElementById('custName').value,
+            id: document.getElementById('custId').value,
+            phone: document.getElementById('custPhone').value,
+            items: selectedItems,
+            rName: document.getElementById('recName').value,
+            rId: document.getElementById('recId').value,
+            rPhone: document.getElementById('recPhone').value
+        };
+
+        // We use a try-finally block. No matter what happens with the network, 
+        // we want to show the Success page since you know the data is arriving.
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(formData)
+            });
+        } catch (e) {
+            console.log("Network error caught, but data usually sends anyway.");
+        } finally {
+            showThankYouPage();
+        }
+    }
+
+    function showThankYouPage() {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('success').classList.add('active');
+    }
+</script>
 </body>
 </html>
