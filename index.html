@@ -12,15 +12,15 @@
             padding: 20px; 
             max-width: 500px; 
             margin: auto; 
-            background: #FDF0F0; /* Soft Blush Background */
-            color: #5F5F5F;      /* Charcoal Gray Text */
+            background: #FDF0F0; 
+            color: #5F5F5F;      
         }
 
         .page { 
             display: none; 
             background: white; 
             padding: 35px; 
-            border-radius: 30px; /* Very rounded corners for a soft feel */
+            border-radius: 30px; 
             box-shadow: 0 10px 25px rgba(255, 183, 178, 0.2); 
         }
 
@@ -35,7 +35,7 @@
         }
 
         h2 { 
-            color: #FFB7B2; /* Peach Pink Headers */
+            color: #FFB7B2; 
             font-weight: 600;
             text-align: center;
             margin-bottom: 5px;
@@ -70,7 +70,7 @@
             width: 100%; 
             padding: 15px; 
             margin: 10px 0; 
-            background: #FFB7B2; /* Peach Pink Buttons */
+            background: #FFB7B2; 
             color: white; 
             border: none; 
             border-radius: 15px;
@@ -92,7 +92,7 @@
         }
 
         .back-btn {
-            background: #B2CEFE !important; /* Pastel Blue for Back buttons */
+            background: #B2CEFE !important; 
             box-shadow: 0 4px 10px rgba(178, 206, 254, 0.4) !important;
         }
 
@@ -260,8 +260,7 @@
             rPhone: document.getElementById('recPhone').value
         };
 
-        // We use a try-finally block. No matter what happens with the network, 
-        // we want to show the Success page since you know the data is arriving.
+        //To show the success of order placed wala page
         try {
             await fetch(SCRIPT_URL, {
                 method: 'POST',
