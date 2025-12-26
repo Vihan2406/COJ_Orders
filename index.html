@@ -3,82 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craft of Joy | Handmade with Love</title>
+    <title>Craft of Joy | Handmade for Everyone</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* Darker Pastel Gradient Theme */
+        /* Gender-Neutral Sunset & Sky Gradient */
         body { 
             font-family: 'Quicksand', sans-serif; 
             padding: 20px; 
             max-width: 500px; 
             margin: auto; 
-            background: linear-gradient(135deg, #f8c8dc 0%, #b298dc 100%);
+            /* Mixing Deep Sky Blue and Muted Sunset Orange */
+            background: linear-gradient(135deg, #74b9ff 0%, #fab1a0 100%);
             background-attachment: fixed;
-            color: #4A4A4A; 
+            color: #2d3436; 
         }
 
         .page { 
             display: none; 
-            background: rgba(255, 255, 255, 0.95); 
+            background: rgba(255, 255, 255, 0.98); 
             padding: 30px; 
-            border-radius: 30px; 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); 
         }
 
         .active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Artistic Title */
         .artistic-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2.8em;
-            color: #7A5C91;
+            color: #0984e3; /* Stronger Blue */
             text-align: center;
             margin-bottom: 10px;
             display: block;
         }
 
-        /* Story Box */
         .story-container {
-            background: #fffafa;
-            border-left: 4px solid #f8c8dc;
+            background: #f1f2f6;
+            border-left: 5px solid #e17055; /* Sunset Orange Accent */
             padding: 20px;
             margin: 20px 0;
-            min-height: 120px; /* Space for 7-8 lines */
+            min-height: 140px;
             font-style: italic;
-            color: #666;
+            color: #444;
             line-height: 1.6;
             border-radius: 10px;
         }
 
-        h2 { color: #7A5C91; text-align: center; font-weight: 700; margin-top: 0; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #E0E0E0; border-radius: 15px; box-sizing: border-box; }
+        h2 { color: #0984e3; text-align: center; font-weight: 700; margin-top: 0; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #dfe6e9; border-radius: 12px; box-sizing: border-box; }
         
+        /* Main Button - Vibrant Blue */
         button { 
-            width: 100%; padding: 16px; margin: 10px 0; background: #8E7AB5; color: white; 
-            border: none; border-radius: 15px; font-weight: 600; font-size: 1.1em; cursor: pointer; 
-            transition: 0.3s; box-shadow: 0 4px 15px rgba(142, 122, 181, 0.3);
+            width: 100%; padding: 16px; margin: 10px 0; background: #0984e3; color: white; 
+            border: none; border-radius: 12px; font-weight: 600; font-size: 1.1em; cursor: pointer; 
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
         }
-        button:hover { background: #7A669E; transform: scale(1.02); }
-        .back-btn { background: #95B391 !important; box-shadow: 0 4px 15px rgba(149, 179, 145, 0.3) !important; }
+        button:hover { background: #0771c1; transform: scale(1.02); }
+        
+        /* Back Button - Muted Orange */
+        .back-btn { background: #e17055 !important; box-shadow: 0 4px 15px rgba(225, 112, 85, 0.3) !important; }
 
-        .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F0F0F0; padding: 15px 0; }
-        .prod-img { width: 65px; height: 65px; border-radius: 15px; margin-right: 15px; object-fit: cover; background: #eee; border: 2px solid #FFF; }
-        .price-footer { background: #fdfdfd; border-top: 2px solid #EEE; padding: 15px; margin: 20px -30px -30px -30px; border-radius: 0 0 30px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .total-amount { color: #7A5C91; font-weight: 700; font-size: 1.3em; }
-        .error-text { color: #D9534F; font-size: 0.85em; display: none; margin-top: -5px; }
+        .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .prod-img { width: 65px; height: 65px; border-radius: 12px; margin-right: 15px; object-fit: cover; background: #dfe6e9; border: 2px solid #FFF; }
+        
+        .price-footer { 
+            background: #fff; border-top: 2px solid #74b9ff; padding: 15px; 
+            margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
+            display: flex; justify-content: space-between; align-items: center; 
+        }
+        .total-amount { color: #e17055; font-weight: 700; font-size: 1.3em; }
+        .error-text { color: #d63031; font-size: 0.85em; display: none; margin-top: -5px; }
     </style>
 </head>
 <body>
 
     <div id="page0" class="page active">
         <span class="artistic-title">Welcome to Craft of Joy</span>
-        
-        <div class="story-container" id="storyBox">
-            </div>
-
+        <div class="story-container" id="storyBox"></div>
         <button onclick="nextPage(1)">Proceed to Order</button>
     </div>
 
@@ -86,9 +89,9 @@
         <h2>Your Details</h2>
         <input type="text" id="custName" placeholder="Full Name">
         <input type="text" id="custId" placeholder="ID (202XXXXXXXXXG)">
-        <div id="custIdError" class="error-text">Invalid ID format.</div>
+        <div id="custIdError" class="error-text">Format: 202XXXXXXXXXG</div>
         <input type="tel" id="custPhone" placeholder="10-Digit Phone">
-        <div id="custPhoneError" class="error-text">Invalid Phone Number.</div>
+        <div id="custPhoneError" class="error-text">Enter 10-digit number.</div>
         <button onclick="validatePage1()">Next: Shop Collection</button>
         <button onclick="nextPage(0)" class="back-btn">Back</button>
     </div>
@@ -97,11 +100,26 @@
         <h2>Our Collection</h2>
         <div class="item">
             <div style="display:flex; align-items:center;">
-                <img src="images/placeholder.jpg" class="prod-img">
+                <img src="images/item1.jpg" class="prod-img">
                 <span><strong>Daisy Bracelet</strong><br><small>₹150</small></span>
             </div>
             <input type="checkbox" class="product" data-price="150" value="Daisy Bracelet (₹150)" onchange="updateTotal()">
         </div>
+        <div class="item">
+            <div style="display:flex; align-items:center;">
+                <img src="images/item2.jpg" class="prod-img">
+                <span><strong>Crochet Bee</strong><br><small>₹250</small></span>
+            </div>
+            <input type="checkbox" class="product" data-price="250" value="Crochet Bee (₹250)" onchange="updateTotal()">
+        </div>
+        <div class="item">
+            <div style="display:flex; align-items:center;">
+                <img src="images/item3.jpg" class="prod-img">
+                <span><strong>Handmade Keychain</strong><br><small>₹120</small></span>
+            </div>
+            <input type="checkbox" class="product" data-price="120" value="Keychain (₹120)" onchange="updateTotal()">
+        </div>
+
         <div class="price-footer">
             <span>Items Selected</span>
             <span class="total-amount">Total: ₹<span id="liveTotal">0</span></span>
@@ -114,37 +132,35 @@
         <h2>Delivery Info</h2>
         <input type="text" id="recName" placeholder="Recipient Name">
         <input type="text" id="recId" placeholder="Recipient ID/Room (202...G)">
-        <div id="recIdError" class="error-text">Invalid ID format.</div>
+        <div id="recIdError" class="error-text">Format: 202XXXXXXXXXG</div>
         <input type="tel" id="recPhone" placeholder="Recipient Phone">
-        <div id="recPhoneError" class="error-text">Invalid Phone Number.</div>
+        <div id="recPhoneError" class="error-text">Enter 10-digit number.</div>
         <button id="confirmBtn" onclick="validateAndSubmit()">Confirm Order</button>
         <button onclick="nextPage(2)" class="back-btn">Back</button>
     </div>
 
     <div id="success" class="page">
         <div style="text-align: center;">
-            <h2 style="color: #7A5C91;">Order Placed!</h2>
+            <h2 style="color: #0984e3;">Order Placed!</h2>
             <p>Your joy is being crafted...</p>
             <button onclick="location.reload()">Return Home</button>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = 'your_google_script_url_here';
+        const SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
         const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
         const phoneRegex = /^[0-9]{10}$/;
 
-        // EDIT YOUR STORIES HERE
         const stories = [
-            "Every stitch in our crochet items is a wish for happiness. We started Craft of Joy to bring a piece of handmade warmth to your busy college life.",
-            "Did you know? The first bracelet we ever made was a gift for a best friend. Now, we craft them so you can celebrate your own friendships.",
-            "We believe that joy isn't found in machines, but in the hands of people. Our crochet flowers never fade, just like the memories you make here.",
-            "Craft of Joy began in a small dorm room with just a single hook and a ball of yarn. Today, it’s a way for us to share our passion with you.",
-            "Each bead in our bracelets is hand-picked for its color and shine. We spend hours matching patterns so your gift feels truly unique.",
-            "When you wear a Craft of Joy piece, you're wearing hours of patience, creativity, and love. Thank you for supporting student-made art!"
+            "Every piece in our collection is crafted with the belief that small things bring the most joy. We focus on quality and character.",
+            "Our journey started with a single ball of yarn and a desire to create something tangible in a digital world.",
+            "We believe handmade isn't just a process; it's a connection. Thank you for choosing student-made craft.",
+            "Craft of Joy represents patience and precision. Each bracelet and crochet item is checked twice for perfection.",
+            "From dorm-room designs to your doorstep—we are proud to share these unique creations with you.",
+            "Whether it's a gift for yourself or a friend, these items are built to last and carry a story of their own."
         ];
 
-        // Pick a random story on load
         window.onload = function() {
             const randomStory = stories[Math.floor(Math.random() * stories.length)];
             document.getElementById('storyBox').innerText = randomStory;
@@ -177,19 +193,19 @@
 
         function validatePage2() {
             if(document.querySelectorAll('.product:checked').length > 0) nextPage(3);
-            else alert("Please select a gift!");
+            else alert("Please select an item to continue!");
         }
 
         function validateAndSubmit() {
             const id = document.getElementById('recId').value;
             const phone = document.getElementById('recPhone').value;
             if(idRegex.test(id) && phoneRegex.test(phone)) submitOrder();
-            else alert("Please verify the recipient details.");
+            else alert("Please check the ID and Phone formats.");
         }
 
         async function submitOrder() {
             const btn = document.getElementById('confirmBtn');
-            btn.innerText = "Sending..."; btn.disabled = true;
+            btn.innerText = "Processing..."; btn.disabled = true;
             const selected = Array.from(document.querySelectorAll('.product:checked')).map(p => p.value).join(", ");
             const data = {
                 name: document.getElementById('custName').value,
