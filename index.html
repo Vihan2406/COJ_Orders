@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craft of Joy | Handmade for Everyone</title>
+    <title>Craft of Joy | Golden Sea Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
@@ -12,7 +12,8 @@
             padding: 20px; 
             max-width: 500px; 
             margin: auto; 
-            background: linear-gradient(135deg, #74b9ff 0%, #81ecec 100%);
+            /* Mixture of Yellow Gold and Sea Green */
+            background: linear-gradient(135deg, #FFD700 0%, #20b2aa 100%);
             background-attachment: fixed;
             color: #2d3436; 
         }
@@ -22,7 +23,7 @@
             background: rgba(255, 255, 255, 0.98); 
             padding: 30px; 
             border-radius: 25px; 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); 
         }
 
         .active { display: block; animation: fadeIn 0.5s; }
@@ -31,7 +32,7 @@
         .artistic-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2.8em;
-            color: #0984e3;
+            color: #b8860b; /* Dark Goldenrod for better readability */
             text-align: center;
             margin-bottom: 10px;
             display: block;
@@ -39,7 +40,7 @@
 
         .story-container {
             background: #f1f2f6;
-            border-left: 5px solid #00cec9;
+            border-left: 5px solid #20b2aa; /* Sea Green Accent */
             padding: 20px;
             margin: 20px 0;
             min-height: 140px;
@@ -51,8 +52,8 @@
 
         /* Summary Styling */
         .summary-box {
-            background: #f9f9f9;
-            border: 2px dashed #74b9ff;
+            background: #fdfdfd;
+            border: 2px dashed #20b2aa;
             padding: 20px;
             border-radius: 15px;
             margin: 15px 0;
@@ -60,7 +61,7 @@
 
         .summary-section-title {
             font-weight: 700;
-            color: #0984e3;
+            color: #20b2aa;
             text-transform: uppercase;
             font-size: 0.8em;
             letter-spacing: 1px;
@@ -74,28 +75,34 @@
             display: block;
         }
 
-        h2 { color: #0984e3; text-align: center; font-weight: 700; margin-top: 0; }
+        h2 { color: #20b2aa; text-align: center; font-weight: 700; margin-top: 0; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #dfe6e9; border-radius: 12px; box-sizing: border-box; }
         
+        /* Main Button - Sea Green */
         button { 
-            width: 100%; padding: 16px; margin: 10px 0; background: #0984e3; color: white; 
+            width: 100%; padding: 16px; margin: 10px 0; background: #20b2aa; color: white; 
             border: none; border-radius: 12px; font-weight: 600; font-size: 1.1em; cursor: pointer; 
-            transition: 0.3s; box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
         }
-        button:hover { background: #0771c1; transform: scale(1.02); }
-        .back-btn { background: #00cec9 !important; box-shadow: 0 4px 15px rgba(0, 206, 201, 0.2) !important; }
+        button:hover { background: #1a938c; transform: scale(1.02); }
+        
+        /* Back Button - Golden */
+        .back-btn { 
+            background: #daa520 !important; /* Goldenrod */
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2) !important; 
+        }
 
         .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
         .prod-img { width: 65px; height: 65px; border-radius: 12px; margin-right: 15px; object-fit: cover; background: #dfe6e9; border: 2px solid #FFF; }
         
         .price-footer { 
-            background: #fff; border-top: 2px solid #74b9ff; padding: 15px; 
+            background: #fff; border-top: 2px solid #FFD700; padding: 15px; 
             margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
             display: flex; justify-content: space-between; align-items: center; 
         }
-        .total-amount { color: #0984e3; font-weight: 700; font-size: 1.3em; }
+        .total-amount { color: #20b2aa; font-weight: 700; font-size: 1.3em; }
         .error-text { color: #d63031; font-size: 0.85em; display: none; margin-top: -5px; }
-        .product { width: 22px; height: 22px; cursor: pointer; accent-color: #0984e3; }
+        .product { width: 22px; height: 22px; cursor: pointer; accent-color: #20b2aa; }
     </style>
 </head>
 <body>
@@ -172,9 +179,9 @@
             <span class="summary-section-title">Items</span>
             <div id="sumItemsList" style="margin-bottom:15px; line-height:1.5;"></div>
             
-            <div style="border-top: 1px solid #74b9ff; padding-top:10px; display:flex; justify-content:space-between; font-weight:bold; font-size:1.2em;">
+            <div style="border-top: 1px solid #FFD700; padding-top:10px; display:flex; justify-content:space-between; font-weight:bold; font-size:1.2em;">
                 <span>Total Amount</span>
-                <span id="sumTotal" style="color:#0984e3;"></span>
+                <span id="sumTotal" style="color:#20b2aa;"></span>
             </div>
         </div>
         <button id="confirmBtn" onclick="submitOrder()">Place Order & Send</button>
@@ -183,7 +190,7 @@
 
     <div id="page5" class="page">
         <div style="text-align: center; padding: 20px 0;">
-            <div style="font-size: 60px; color: #0984e3; margin-bottom: 20px;">✓</div>
+            <div style="font-size: 60px; color: #20b2aa; margin-bottom: 20px;">✓</div>
             <h2>Thank You!</h2>
             <p>Your order has been placed successfully. We are crafting your joy!</p>
             <button onclick="location.reload()" style="margin-top: 20px;">Return Home</button>
@@ -191,7 +198,9 @@
     </div>
 
     <script>
+        // Integrated SCRIPT_URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3zVJFD5HXzLuRHde3Wg5Tg_1XwtrbndEuWumzuOmP2aFvdkr0TGUQneNM6MoD3j3rDw/exec';
+        
         const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
         const phoneRegex = /^[0-9]{10}$/;
 
@@ -277,8 +286,15 @@
                 rId: document.getElementById('recId').value,
                 rPhone: document.getElementById('recPhone').value
             };
-            try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }); } 
-            finally { nextPage(5); }
+            try { 
+                await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: JSON.stringify(data) 
+                }); 
+            } finally { 
+                nextPage(5); 
+            }
         }
     </script>
 </body>
