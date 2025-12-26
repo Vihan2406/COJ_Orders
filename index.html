@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Pastel Styles */
         body { font-family: 'Quicksand', sans-serif; padding: 20px; max-width: 500px; margin: auto; background: #FDF0F0; color: #5F5F5F; }
         .page { display: none; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255, 183, 178, 0.2); }
         .active { display: block; animation: fadeIn 0.5s; }
@@ -18,16 +17,14 @@
         button { width: 100%; padding: 15px; margin: 10px 0; background: #FFB7B2; color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         button:hover { background: #ff9e97; transform: translateY(-2px); }
         
-        /* Product Item Styles */
         .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #FDF0F0; padding: 15px 0; }
         .prod-info { display: flex; align-items: center; }
         .prod-img { 
             width: 60px; height: 60px; border-radius: 12px; 
             margin-right: 15px; object-fit: cover; background: #eee; 
-            cursor: zoom-in; /* Indicates you can click to see gallery */
+            cursor: zoom-in;
         }
-        
-        /* Pricing Footer */
+
         .price-footer { 
             background: #FFF; border-top: 2px solid #FDF0F0; 
             padding: 15px; position: sticky; bottom: -30px; 
@@ -102,7 +99,7 @@
     <div id="success" class="page">
         <div style="text-align: center;">
             <h2 style="color: #B2CEFE;">Order Placed!</h2>
-            <p>Thank you for supporting handmade!</p>
+            <p>Thank you for placing order!</p>
             <button onclick="location.reload()">New Order</button>
         </div>
     </div>
@@ -117,7 +114,6 @@
             document.getElementById('page' + pageNo).classList.add('active');
         }
 
-        // --- NEW: Live Total Logic ---
         function updateTotal() {
             let total = 0;
             const selected = document.querySelectorAll('.product:checked');
@@ -127,12 +123,11 @@
             document.getElementById('liveTotal').innerText = total;
         }
 
-        // --- NEW: Simple Image Gallery Action ---
         function openGallery(src) {
             if(src.includes('placeholder')) {
                 alert("Image gallery will open here once you add your photos!");
             } else {
-                window.open(src, '_blank'); // Opens the full image in a new tab
+                window.open(src, '_blank'); 
             }
         }
 
