@@ -12,7 +12,7 @@
             padding: 20px; 
             max-width: 500px; 
             margin: auto; 
-            background: linear-gradient(135deg, #74b9ff 0%, #fab1a0 100%);
+            background: linear-gradient(135deg, #74b9ff 0%, #81ecec 100%);
             background-attachment: fixed;
             color: #2d3436; 
         }
@@ -22,7 +22,7 @@
             background: rgba(255, 255, 255, 0.98); 
             padding: 30px; 
             border-radius: 25px; 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
         }
 
         .active { display: block; animation: fadeIn 0.5s; }
@@ -39,7 +39,7 @@
 
         .story-container {
             background: #f1f2f6;
-            border-left: 5px solid #e17055;
+            border-left: 5px solid #00cec9; 
             padding: 20px;
             margin: 20px 0;
             min-height: 140px;
@@ -58,7 +58,8 @@
             transition: 0.3s; box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
         }
         button:hover { background: #0771c1; transform: scale(1.02); }
-        .back-btn { background: #e17055 !important; box-shadow: 0 4px 15px rgba(225, 112, 85, 0.3) !important; }
+        
+        .back-btn { background: #00cec9 !important; box-shadow: 0 4px 15px rgba(0, 206, 201, 0.2) !important; }
 
         .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
         .prod-img { width: 65px; height: 65px; border-radius: 12px; margin-right: 15px; object-fit: cover; background: #dfe6e9; border: 2px solid #FFF; }
@@ -68,10 +69,9 @@
             margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
             display: flex; justify-content: space-between; align-items: center; 
         }
-        .total-amount { color: #e17055; font-weight: 700; font-size: 1.3em; }
+        .total-amount { color: #0984e3; font-weight: 700; font-size: 1.3em; }
         .error-text { color: #d63031; font-size: 0.85em; display: none; margin-top: -5px; }
         
-        /* Checkbox styling */
         .product { width: 22px; height: 22px; cursor: pointer; accent-color: #0984e3; }
     </style>
 </head>
@@ -129,7 +129,7 @@
     <div id="page3" class="page">
         <h2>Delivery Info</h2>
         <input type="text" id="recName" placeholder="Recipient Name">
-        <input type="text" id="recId" placeholder="Recipient ID">
+        <input type="text" id="recId" placeholder="Recipient ID/Room (202...G)">
         <div id="recIdError" class="error-text">Format required: 202XXXXXXXXXG</div>
         <input type="tel" id="recPhone" placeholder="Recipient Phone">
         <div id="recPhoneError" class="error-text">Enter a valid 10-digit number.</div>
@@ -147,7 +147,9 @@
     </div>
 
     <script>
+        // Updated Script URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3zVJFD5HXzLuRHde3Wg5Tg_1XwtrbndEuWumzuOmP2aFvdkr0TGUQneNM6MoD3j3rDw/exec';
+        
         const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
         const phoneRegex = /^[0-9]{10}$/;
 
@@ -229,16 +231,15 @@
             };
 
             try {
-                // We show the success page immediately after the fetch call
                 await fetch(SCRIPT_URL, { 
                     method: 'POST', 
                     mode: 'no-cors', 
                     body: JSON.stringify(data) 
                 });
             } catch (error) {
-                console.log("Success even if fetch throws CORS error");
+                console.log("Submission sent.");
             } finally {
-                nextPage(4); // Explicitly moves to the Success Page
+                nextPage(4);
             }
         }
     </script>
