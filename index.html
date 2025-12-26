@@ -7,277 +7,179 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        body { 
-            font-family: 'Quicksand', sans-serif; 
-            padding: 20px; 
-            max-width: 500px; 
-            margin: auto; 
-            background: #FDF0F0; 
-            color: #5F5F5F;      
+        /* Base Pastel Styles */
+        body { font-family: 'Quicksand', sans-serif; padding: 20px; max-width: 500px; margin: auto; background: #FDF0F0; color: #5F5F5F; }
+        .page { display: none; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 25px rgba(255, 183, 178, 0.2); }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        h2 { color: #FFB7B2; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #FDF0F0; border-radius: 15px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; margin: 10px 0; background: #FFB7B2; color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #ff9e97; transform: translateY(-2px); }
+        
+        /* Product Item Styles */
+        .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #FDF0F0; padding: 15px 0; }
+        .prod-info { display: flex; align-items: center; }
+        .prod-img { 
+            width: 60px; height: 60px; border-radius: 12px; 
+            margin-right: 15px; object-fit: cover; background: #eee; 
+            cursor: zoom-in; /* Indicates you can click to see gallery */
         }
-
-        .page { 
-            display: none; 
-            background: white; 
-            padding: 35px; 
-            border-radius: 30px; 
-            box-shadow: 0 10px 25px rgba(255, 183, 178, 0.2); 
+        
+        /* Pricing Footer */
+        .price-footer { 
+            background: #FFF; border-top: 2px solid #FDF0F0; 
+            padding: 15px; position: sticky; bottom: -30px; 
+            margin: 20px -30px -30px -30px; border-radius: 0 0 30px 30px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .active { 
-            display: block; 
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 { 
-            color: #FFB7B2; 
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        p {
-            text-align: center;
-            font-size: 0.9em;
-            margin-bottom: 25px;
-            color: #888;
-        }
-
-        input { 
-            width: 100%; 
-            padding: 14px; 
-            margin: 10px 0; 
-            border: 2px solid #FDF0F0; 
-            border-radius: 15px; 
-            box-sizing: border-box; 
-            background: #FAFAFA;
-            font-family: inherit;
-            transition: border 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border: 2px solid #FFB7B2;
-            background: #fff;
-        }
-
-        button { 
-            width: 100%; 
-            padding: 15px; 
-            margin: 10px 0; 
-            background: #FFB7B2; 
-            color: white; 
-            border: none; 
-            border-radius: 15px;
-            font-weight: 600; 
-            font-size: 1em;
-            cursor: pointer; 
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(255, 183, 178, 0.4);
-        }
-
-        button:hover { 
-            background: #ff9e97; 
-            transform: translateY(-2px);
-        }
-
-        button:disabled { 
-            background: #E5E5E5; 
-            box-shadow: none;
-        }
-
-        .back-btn {
-            background: #B2CEFE !important; 
-            box-shadow: 0 4px 10px rgba(178, 206, 254, 0.4) !important;
-        }
-
-        .item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #FDF0F0; 
-            padding: 15px 0; 
-        }
-
-        .item strong {
-            color: #5F5F5F;
-            font-size: 1.1em;
-        }
-
-        .checkbox-custom {
-            accent-color: #FFB7B2;
-            width: 20px;
-            height: 20px;
-        }
-
-        .error-text { 
-            color: #ff8b84; 
-            font-size: 0.8em; 
-            margin-left: 5px;
-            display: none; 
-        }
-
-        .success-icon {
-            display: block;
-            font-size: 50px;
-            margin: 0 auto 15px;
-            color: #B2CEFE;
-        }
+        .total-amount { color: #FFB7B2; font-weight: 600; font-size: 1.2em; }
+        
+        .error-text { color: #ff8b84; font-size: 0.8em; display: none; margin-top: -5px; }
     </style>
 </head>
 <body>
 
     <div id="page1" class="page active">
-        <h2>Customer Details</h2>
-        <p>All fields are compulsory.</p>
-        
-        <input type="text" id="custName" placeholder="Your Full Name">
-        
-        <input type="text" id="custId" placeholder="Format: 202XXXXXXXXXG">
-        <div id="custIdError" class="error-text">Invalid ID format (Example: 2024ABCD1234G)</div>
-        
-        <input type="tel" id="custPhone" placeholder="10-digit Phone Number">
-        <div id="custPhoneError" class="error-text">Please enter a valid 10-digit number.</div>
-        
-        <button onclick="validatePage1()">Next: Select Products</button>
+        <h2>Your Details</h2>
+        <input type="text" id="custName" placeholder="Full Name">
+        <input type="text" id="custId" placeholder="ID (202XXXXXXXXXG)">
+        <div id="custIdError" class="error-text">Invalid ID format.</div>
+        <input type="tel" id="custPhone" placeholder="10-Digit Phone">
+        <div id="custPhoneError" class="error-text">Invalid Phone Number.</div>
+        <button onclick="validatePage1()">Next: Shop Collection</button>
     </div>
 
     <div id="page2" class="page">
-        <h2>Product List</h2>
-        <p>You can select one or multiple items.</p>
+        <h2>Our Collection</h2>
+        <p>Click images to view details</p>
+
         <div class="item">
-            <span><strong>Item X</strong><br><small>Price: ₹100</small></span>
-            <input type="checkbox" class="product" value="Item X (₹100)" style="width: auto;">
+            <div class="prod-info">
+                <img src="images/placeholder.jpg" class="prod-img" onclick="openGallery(this.src)">
+                <span><strong>Daisy Bracelet</strong><br><small>₹150</small></span>
+            </div>
+            <input type="checkbox" class="product" value="Daisy Bracelet (₹150)" data-price="150" onchange="updateTotal()">
         </div>
+
         <div class="item">
-            <span><strong>Item Y</strong><br><small>Price: ₹200</small></span>
-            <input type="checkbox" class="product" value="Item Y (₹200)" style="width: auto;">
+            <div class="prod-info">
+                <img src="images/placeholder.jpg" class="prod-img" onclick="openGallery(this.src)">
+                <span><strong>Crochet Bee</strong><br><small>₹250</small></span>
+            </div>
+            <input type="checkbox" class="product" value="Crochet Bee (₹250)" data-price="250" onchange="updateTotal()">
         </div>
+
         <div class="item">
-            <span><strong>Item Z</strong><br><small>Price: ₹150</small></span>
-            <input type="checkbox" class="product" value="Item Z (₹150)" style="width: auto;">
+            <div class="prod-info">
+                <img src="images/placeholder.jpg" class="prod-img" onclick="openGallery(this.src)">
+                <span><strong>Pastel Charm</strong><br><small>₹120</small></span>
+            </div>
+            <input type="checkbox" class="product" value="Pastel Charm (₹120)" data-price="120" onchange="updateTotal()">
         </div>
-        <div id="productError" class="error-text">Please select at least one item.</div>
-        <button onclick="validatePage2()">Next: Delivery Details</button>
-        <button onclick="nextPage(1)" style="background: #6c757d;">Back</button>
+
+        <div class="price-footer">
+            <span>Items Selected</span>
+            <span class="total-amount">Total: ₹<span id="liveTotal">0</span></span>
+        </div>
+
+        <button onclick="validatePage2()">Next: Delivery</button>
+        <button onclick="nextPage(1)" style="background:#B2CEFE">Back</button>
     </div>
 
     <div id="page3" class="page">
-        <h2>Delivery Details</h2>
+        <h2>Delivery Info</h2>
         <input type="text" id="recName" placeholder="Recipient Name">
-        
-        <input type="text" id="recId" placeholder="Recipient ID: 202XXXXXXXXXG">
+        <input type="text" id="recId" placeholder="Recipient ID/Room (202...G)">
         <div id="recIdError" class="error-text">Invalid ID format.</div>
-        
-        <input type="tel" id="recPhone" placeholder="Recipient 10-digit Phone">
-        <div id="recPhoneError" class="error-text">Please enter a valid 10-digit number.</div>
-        
-        <button id="confirmBtn" onclick="validateAndSubmit()">Confirm & Place Order</button>
-        <button onclick="nextPage(2)" style="background: #6c757d;">Back</button>
+        <input type="tel" id="recPhone" placeholder="Recipient Phone">
+        <div id="recPhoneError" class="error-text">Invalid Phone Number.</div>
+        <button id="confirmBtn" onclick="validateAndSubmit()">Confirm Order</button>
+        <button onclick="nextPage(2)" style="background:#B2CEFE">Back</button>
     </div>
 
     <div id="success" class="page">
         <div style="text-align: center;">
-            <h2 style="color: #28a745;">✔ Order Confirmed!</h2>
-            <button onclick="location.reload()">Place New Order</button>
+            <h2 style="color: #B2CEFE;">Order Placed!</h2>
+            <p>Thank you for supporting handmade!</p>
+            <button onclick="location.reload()">New Order</button>
         </div>
     </div>
 
-<script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwllzgyizcL7TgocbOjO4L5umqAosWOe8tc_f8zycIbcJhnB6Q1KN0m51dr_jIgSZBi8w/exec';
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwllzgyizcL7TgocbOjO4L5umqAosWOe8tc_f8zycIbcJhnB6Q1KN0m51dr_jIgSZBi8w/exec';
+        const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
+        const phoneRegex = /^[0-9]{10}$/;
 
-    // Validation Rules
-    const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
-    const phoneRegex = /^[0-9]{10}$/; 
-
-    function nextPage(pageNo) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        const target = document.getElementById('page' + pageNo);
-        if (target) {
-            target.classList.add('active');
-        } else if (pageNo === 'success') {
-            document.getElementById('success').classList.add('active');
+        function nextPage(pageNo) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNo).classList.add('active');
         }
-    }
 
-    function validatePage1() {
-        const name = document.getElementById('custName').value.trim();
-        const id = document.getElementById('custId').value.trim();
-        const phone = document.getElementById('custPhone').value.trim();
-
-        document.getElementById('custIdError').style.display = 'none';
-        document.getElementById('custPhoneError').style.display = 'none';
-
-        let isValid = true;
-        if (!name) { alert("Name is required."); isValid = false; }
-        if (!idRegex.test(id)) { document.getElementById('custIdError').style.display = 'block'; isValid = false; }
-        if (!phoneRegex.test(phone)) { document.getElementById('custPhoneError').style.display = 'block'; isValid = false; }
-
-        if (isValid) nextPage(2);
-    }
-
-    function validatePage2() {
-        const checked = document.querySelectorAll('.product:checked').length;
-        document.getElementById('productError').style.display = (checked === 0) ? 'block' : 'none';
-        if (checked > 0) nextPage(3);
-    }
-
-    function validateAndSubmit() {
-        const rName = document.getElementById('recName').value.trim();
-        const rId = document.getElementById('recId').value.trim();
-        const rPhone = document.getElementById('recPhone').value.trim();
-
-        document.getElementById('recIdError').style.display = 'none';
-        document.getElementById('recPhoneError').style.display = 'none';
-
-        let isValid = true;
-        if (!rName) { alert("Recipient name is required."); isValid = false; }
-        if (!idRegex.test(rId)) { document.getElementById('recIdError').style.display = 'block'; isValid = false; }
-        if (!phoneRegex.test(rPhone)) { document.getElementById('recPhoneError').style.display = 'block'; isValid = false; }
-
-        if (isValid) submitOrder();
-    }
-
-    async function submitOrder() {
-        const btn = document.getElementById('confirmBtn');
-        btn.innerText = "Processing...";
-        btn.disabled = true;
-
-        const selectedItems = Array.from(document.querySelectorAll('.product:checked')).map(p => p.value).join(", ");
-
-        const formData = {
-            name: document.getElementById('custName').value,
-            id: document.getElementById('custId').value,
-            phone: document.getElementById('custPhone').value,
-            items: selectedItems,
-            rName: document.getElementById('recName').value,
-            rId: document.getElementById('recId').value,
-            rPhone: document.getElementById('recPhone').value
-        };
-
-        //To show the success of order placed wala page
-        try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(formData)
+        // --- NEW: Live Total Logic ---
+        function updateTotal() {
+            let total = 0;
+            const selected = document.querySelectorAll('.product:checked');
+            selected.forEach(item => {
+                total += parseInt(item.getAttribute('data-price'));
             });
-        } catch (e) {
-            console.log("Network error caught, but data usually sends anyway.");
-        } finally {
-            showThankYouPage();
+            document.getElementById('liveTotal').innerText = total;
         }
-    }
 
-    function showThankYouPage() {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('success').classList.add('active');
-    }
-</script>
+        // --- NEW: Simple Image Gallery Action ---
+        function openGallery(src) {
+            if(src.includes('placeholder')) {
+                alert("Image gallery will open here once you add your photos!");
+            } else {
+                window.open(src, '_blank'); // Opens the full image in a new tab
+            }
+        }
+
+        function validatePage1() {
+            const id = document.getElementById('custId').value;
+            const phone = document.getElementById('custPhone').value;
+            let ok = true;
+            if(!idRegex.test(id)) { document.getElementById('custIdError').style.display='block'; ok=false; }
+            if(!phoneRegex.test(phone)) { document.getElementById('custPhoneError').style.display='block'; ok=false; }
+            if(ok) nextPage(2);
+        }
+
+        function validatePage2() {
+            if(document.querySelectorAll('.product:checked').length > 0) nextPage(3);
+            else alert("Please select at least one item!");
+        }
+
+        function validateAndSubmit() {
+            const id = document.getElementById('recId').value;
+            const phone = document.getElementById('recPhone').value;
+            if(idRegex.test(id) && phoneRegex.test(phone)) submitOrder();
+            else alert("Please check delivery details!");
+        }
+
+        async function submitOrder() {
+            const btn = document.getElementById('confirmBtn');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            const selected = Array.from(document.querySelectorAll('.product:checked')).map(p => p.value).join(", ");
+            const data = {
+                name: document.getElementById('custName').value,
+                id: document.getElementById('custId').value,
+                phone: document.getElementById('custPhone').value,
+                items: selected + " | Total: ₹" + document.getElementById('liveTotal').innerText,
+                rName: document.getElementById('recName').value,
+                rId: document.getElementById('recId').value,
+                rPhone: document.getElementById('recPhone').value
+            };
+
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+            } finally {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('success').classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
