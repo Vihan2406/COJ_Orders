@@ -12,7 +12,6 @@
             padding: 20px; 
             max-width: 500px; 
             margin: auto; 
-            /* Mixture of Yellow Gold and Sea Green */
             background: linear-gradient(135deg, #FFD700 0%, #20b2aa 100%);
             background-attachment: fixed;
             color: #2d3436; 
@@ -32,7 +31,7 @@
         .artistic-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2.8em;
-            color: #b8860b; /* Dark Goldenrod for better readability */
+            color: #b8860b;
             text-align: center;
             margin-bottom: 10px;
             display: block;
@@ -40,7 +39,7 @@
 
         .story-container {
             background: #f1f2f6;
-            border-left: 5px solid #20b2aa; /* Sea Green Accent */
+            border-left: 5px solid #20b2aa;
             padding: 20px;
             margin: 20px 0;
             min-height: 140px;
@@ -50,7 +49,34 @@
             border-radius: 10px;
         }
 
-        /* Summary Styling */
+        /* Quantity Selector Styling */
+        .qty-controls {
+            display: none; /* Hidden until item is checked */
+            align-items: center;
+            gap: 10px;
+            background: #f1f2f6;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+        .qty-btn {
+            background: #20b2aa;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+        }
+        .qty-val { font-weight: 700; min-width: 15px; text-align: center; }
+
         .summary-box {
             background: #fdfdfd;
             border: 2px dashed #20b2aa;
@@ -69,28 +95,17 @@
             display: block;
         }
 
-        .summary-text {
-            font-size: 1em;
-            margin-bottom: 10px;
-            display: block;
-        }
-
+        .summary-text { font-size: 1em; margin-bottom: 10px; display: block; }
         h2 { color: #20b2aa; text-align: center; font-weight: 700; margin-top: 0; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #dfe6e9; border-radius: 12px; box-sizing: border-box; }
+        input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #dfe6e9; border-radius: 12px; box-sizing: border-box; }
         
-        /* Main Button - Sea Green */
         button { 
             width: 100%; padding: 16px; margin: 10px 0; background: #20b2aa; color: white; 
             border: none; border-radius: 12px; font-weight: 600; font-size: 1.1em; cursor: pointer; 
             transition: 0.3s; box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
         }
         button:hover { background: #1a938c; transform: scale(1.02); }
-        
-        /* Back Button - Golden */
-        .back-btn { 
-            background: #daa520 !important; /* Goldenrod */
-            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2) !important; 
-        }
+        .back-btn { background: #daa520 !important; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2) !important; }
 
         .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
         .prod-img { width: 65px; height: 65px; border-radius: 12px; margin-right: 15px; object-fit: cover; background: #dfe6e9; border: 2px solid #FFF; }
@@ -126,26 +141,44 @@
 
     <div id="page2" class="page">
         <h2>Our Collection</h2>
-        <div class="item">
+        
+        <div class="item" id="item-row-1">
             <div style="display:flex; align-items:center;">
                 <img src="images/item1.jpg" class="prod-img">
                 <span><strong>Daisy Bracelet</strong><br><small>₹150</small></span>
+                <div class="qty-controls" id="qty-box-1">
+                    <button class="qty-btn" onclick="changeQty(1, -1)">-</button>
+                    <span class="qty-val" id="qty-val-1">1</span>
+                    <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
+                </div>
             </div>
-            <input type="checkbox" class="product" data-price="150" value="Daisy Bracelet (₹150)" onchange="updateTotal()">
+            <input type="checkbox" class="product" data-id="1" data-price="150" value="Daisy Bracelet" onchange="toggleQty(1)">
         </div>
-        <div class="item">
+
+        <div class="item" id="item-row-2">
             <div style="display:flex; align-items:center;">
                 <img src="images/item2.jpg" class="prod-img">
                 <span><strong>Crochet Bee</strong><br><small>₹250</small></span>
+                <div class="qty-controls" id="qty-box-2">
+                    <button class="qty-btn" onclick="changeQty(2, -1)">-</button>
+                    <span class="qty-val" id="qty-val-2">1</span>
+                    <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
+                </div>
             </div>
-            <input type="checkbox" class="product" data-price="250" value="Crochet Bee (₹250)" onchange="updateTotal()">
+            <input type="checkbox" class="product" data-id="2" data-price="250" value="Crochet Bee" onchange="toggleQty(2)">
         </div>
-        <div class="item">
+
+        <div class="item" id="item-row-3">
             <div style="display:flex; align-items:center;">
                 <img src="images/item3.jpg" class="prod-img">
                 <span><strong>Handmade Keychain</strong><br><small>₹120</small></span>
+                <div class="qty-controls" id="qty-box-3">
+                    <button class="qty-btn" onclick="changeQty(3, -1)">-</button>
+                    <span class="qty-val" id="qty-val-3">1</span>
+                    <button class="qty-btn" onclick="changeQty(3, 1)">+</button>
+                </div>
             </div>
-            <input type="checkbox" class="product" data-price="120" value="Keychain (₹120)" onchange="updateTotal()">
+            <input type="checkbox" class="product" data-id="3" data-price="120" value="Keychain" onchange="toggleQty(3)">
         </div>
 
         <div class="price-footer">
@@ -172,13 +205,10 @@
         <div class="summary-box">
             <span class="summary-section-title">Purchased By</span>
             <span class="summary-text" id="sumCustName"></span>
-            
             <span class="summary-section-title">Delivery To</span>
             <span class="summary-text" id="sumRecName"></span>
-            
-            <span class="summary-section-title">Items</span>
+            <span class="summary-section-title">Selected Items</span>
             <div id="sumItemsList" style="margin-bottom:15px; line-height:1.5;"></div>
-            
             <div style="border-top: 1px solid #FFD700; padding-top:10px; display:flex; justify-content:space-between; font-weight:bold; font-size:1.2em;">
                 <span>Total Amount</span>
                 <span id="sumTotal" style="color:#20b2aa;"></span>
@@ -198,9 +228,7 @@
     </div>
 
     <script>
-        // Integrated SCRIPT_URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3zVJFD5HXzLuRHde3Wg5Tg_1XwtrbndEuWumzuOmP2aFvdkr0TGUQneNM6MoD3j3rDw/exec';
-        
         const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
         const phoneRegex = /^[0-9]{10}$/;
 
@@ -224,10 +252,31 @@
             window.scrollTo(0,0);
         }
 
+        // --- QUANTITY LOGIC ---
+        function toggleQty(id) {
+            const checkbox = document.querySelector(`.product[data-id="${id}"]`);
+            const qtyBox = document.getElementById(`qty-box-${id}`);
+            qtyBox.style.display = checkbox.checked ? 'flex' : 'none';
+            if(!checkbox.checked) document.getElementById(`qty-val-${id}`).innerText = 1;
+            updateTotal();
+        }
+
+        function changeQty(id, delta) {
+            const valSpan = document.getElementById(`qty-val-${id}`);
+            let current = parseInt(valSpan.innerText);
+            current += delta;
+            if(current < 1) current = 1;
+            valSpan.innerText = current;
+            updateTotal();
+        }
+
         function updateTotal() {
             let total = 0;
             document.querySelectorAll('.product:checked').forEach(item => {
-                total += parseInt(item.getAttribute('data-price'));
+                const id = item.getAttribute('data-id');
+                const price = parseInt(item.getAttribute('data-price'));
+                const qty = parseInt(document.getElementById(`qty-val-${id}`).innerText);
+                total += (price * qty);
             });
             document.getElementById('liveTotal').innerText = total;
         }
@@ -258,7 +307,6 @@
             if(!name) { alert("Recipient name is required."); return; }
             if(!idRegex.test(id)) { document.getElementById('recIdError').style.display='block'; return; }
             if(!phoneRegex.test(phone)) { document.getElementById('recPhoneError').style.display='block'; return; }
-            
             generateSummary();
             nextPage(4);
         }
@@ -267,7 +315,11 @@
             document.getElementById('sumCustName').innerText = document.getElementById('custName').value;
             document.getElementById('sumRecName').innerText = document.getElementById('recName').value;
             const selectedItems = Array.from(document.querySelectorAll('.product:checked'))
-                .map(p => `• ${p.value}<br>`)
+                .map(p => {
+                    const id = p.getAttribute('data-id');
+                    const qty = document.getElementById(`qty-val-${id}`).innerText;
+                    return `• ${p.value} x${qty}<br>`;
+                })
                 .join("");
             document.getElementById('sumItemsList').innerHTML = selectedItems;
             document.getElementById('sumTotal').innerText = "₹" + document.getElementById('liveTotal').innerText;
@@ -276,25 +328,25 @@
         async function submitOrder() {
             const btn = document.getElementById('confirmBtn');
             btn.innerText = "Processing..."; btn.disabled = true;
-            const selected = Array.from(document.querySelectorAll('.product:checked')).map(p => p.value).join(", ");
+            
+            const selectedStr = Array.from(document.querySelectorAll('.product:checked'))
+                .map(p => {
+                    const id = p.getAttribute('data-id');
+                    const qty = document.getElementById(`qty-val-${id}`).innerText;
+                    return `${p.value}(x${qty})`;
+                }).join(", ");
+
             const data = {
                 name: document.getElementById('custName').value,
                 id: document.getElementById('custId').value,
                 phone: document.getElementById('custPhone').value,
-                items: selected + " | Total: ₹" + document.getElementById('liveTotal').innerText,
+                items: selectedStr + " | Total: ₹" + document.getElementById('liveTotal').innerText,
                 rName: document.getElementById('recName').value,
                 rId: document.getElementById('recId').value,
                 rPhone: document.getElementById('recPhone').value
             };
-            try { 
-                await fetch(SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify(data) 
-                }); 
-            } finally { 
-                nextPage(5); 
-            }
+            try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }); } 
+            finally { nextPage(5); }
         }
     </script>
 </body>
