@@ -39,7 +39,7 @@
 
         .story-container {
             background: #f1f2f6;
-            border-left: 5px solid #00cec9; 
+            border-left: 5px solid #00cec9;
             padding: 20px;
             margin: 20px 0;
             min-height: 140px;
@@ -47,6 +47,31 @@
             color: #444;
             line-height: 1.6;
             border-radius: 10px;
+        }
+
+        /* Summary Styling */
+        .summary-box {
+            background: #f9f9f9;
+            border: 2px dashed #74b9ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        .summary-section-title {
+            font-weight: 700;
+            color: #0984e3;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .summary-text {
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: block;
         }
 
         h2 { color: #0984e3; text-align: center; font-weight: 700; margin-top: 0; }
@@ -58,7 +83,6 @@
             transition: 0.3s; box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
         }
         button:hover { background: #0771c1; transform: scale(1.02); }
-        
         .back-btn { background: #00cec9 !important; box-shadow: 0 4px 15px rgba(0, 206, 201, 0.2) !important; }
 
         .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
@@ -71,7 +95,6 @@
         }
         .total-amount { color: #0984e3; font-weight: 700; font-size: 1.3em; }
         .error-text { color: #d63031; font-size: 0.85em; display: none; margin-top: -5px; }
-        
         .product { width: 22px; height: 22px; cursor: pointer; accent-color: #0984e3; }
     </style>
 </head>
@@ -119,10 +142,10 @@
         </div>
 
         <div class="price-footer">
-            <span>Items Selected</span>
-            <span class="total-amount">Total: ₹<span id="liveTotal">0</span></span>
+            <span>Subtotal</span>
+            <span class="total-amount">₹<span id="liveTotal">0</span></span>
         </div>
-        <button onclick="validatePage2()">Next: Delivery</button>
+        <button onclick="validatePage2()">Next: Delivery Info</button>
         <button onclick="nextPage(1)" class="back-btn">Back</button>
     </div>
 
@@ -133,23 +156,42 @@
         <div id="recIdError" class="error-text">Format required: 202XXXXXXXXXG</div>
         <input type="tel" id="recPhone" placeholder="Recipient Phone">
         <div id="recPhoneError" class="error-text">Enter a valid 10-digit number.</div>
-        <button id="confirmBtn" onclick="validateAndSubmit()">Confirm & Place Order</button>
+        <button onclick="validatePage3()">Next: Final Summary</button>
         <button onclick="nextPage(2)" class="back-btn">Back</button>
     </div>
 
     <div id="page4" class="page">
+        <h2>Review Order</h2>
+        <div class="summary-box">
+            <span class="summary-section-title">Purchased By</span>
+            <span class="summary-text" id="sumCustName"></span>
+            
+            <span class="summary-section-title">Delivery To</span>
+            <span class="summary-text" id="sumRecName"></span>
+            
+            <span class="summary-section-title">Items</span>
+            <div id="sumItemsList" style="margin-bottom:15px; line-height:1.5;"></div>
+            
+            <div style="border-top: 1px solid #74b9ff; padding-top:10px; display:flex; justify-content:space-between; font-weight:bold; font-size:1.2em;">
+                <span>Total Amount</span>
+                <span id="sumTotal" style="color:#0984e3;"></span>
+            </div>
+        </div>
+        <button id="confirmBtn" onclick="submitOrder()">Place Order & Send</button>
+        <button onclick="nextPage(3)" class="back-btn">Edit Details</button>
+    </div>
+
+    <div id="page5" class="page">
         <div style="text-align: center; padding: 20px 0;">
             <div style="font-size: 60px; color: #0984e3; margin-bottom: 20px;">✓</div>
-            <h2>Order Placed!</h2>
-            <p>Thank you for choosing Craft of Joy. Your handmade item is being prepared with care.</p>
-            <button onclick="location.reload()" style="margin-top: 20px;">Back to Home</button>
+            <h2>Thank You!</h2>
+            <p>Your order has been placed successfully. We are crafting your joy!</p>
+            <button onclick="location.reload()" style="margin-top: 20px;">Return Home</button>
         </div>
     </div>
 
     <script>
-        // Updated Script URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3zVJFD5HXzLuRHde3Wg5Tg_1XwtrbndEuWumzuOmP2aFvdkr0TGUQneNM6MoD3j3rDw/exec';
-        
         const idRegex = /^202[a-zA-Z0-9]{9}G$/i; 
         const phoneRegex = /^[0-9]{10}$/;
 
@@ -185,40 +227,46 @@
             const id = document.getElementById('custId').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const name = document.getElementById('custName').value.trim();
-            let ok = true;
-
             document.getElementById('custIdError').style.display='none';
             document.getElementById('custPhoneError').style.display='none';
-
-            if(!name) { alert("Please enter your name."); ok = false; }
-            if(!idRegex.test(id)) { document.getElementById('custIdError').style.display='block'; ok=false; }
-            if(!phoneRegex.test(phone)) { document.getElementById('custPhoneError').style.display='block'; ok=false; }
-            
-            if(ok) nextPage(2);
+            if(!name) { alert("Please enter your name."); return; }
+            if(!idRegex.test(id)) { document.getElementById('custIdError').style.display='block'; return; }
+            if(!phoneRegex.test(phone)) { document.getElementById('custPhoneError').style.display='block'; return; }
+            nextPage(2);
         }
 
         function validatePage2() {
-            const checked = document.querySelectorAll('.product:checked').length;
-            if(checked > 0) nextPage(3);
+            if(document.querySelectorAll('.product:checked').length > 0) nextPage(3);
             else alert("Please select at least one item!");
         }
 
-        function validateAndSubmit() {
+        function validatePage3() {
             const id = document.getElementById('recId').value.trim();
             const phone = document.getElementById('recPhone').value.trim();
             const name = document.getElementById('recName').value.trim();
+            document.getElementById('recIdError').style.display='none';
+            document.getElementById('recPhoneError').style.display='none';
+            if(!name) { alert("Recipient name is required."); return; }
+            if(!idRegex.test(id)) { document.getElementById('recIdError').style.display='block'; return; }
+            if(!phoneRegex.test(phone)) { document.getElementById('recPhoneError').style.display='block'; return; }
             
-            if(!name || !idRegex.test(id) || !phoneRegex.test(phone)) {
-                alert("Please ensure all recipient fields are filled correctly.");
-                return;
-            }
-            submitOrder();
+            generateSummary();
+            nextPage(4);
+        }
+
+        function generateSummary() {
+            document.getElementById('sumCustName').innerText = document.getElementById('custName').value;
+            document.getElementById('sumRecName').innerText = document.getElementById('recName').value;
+            const selectedItems = Array.from(document.querySelectorAll('.product:checked'))
+                .map(p => `• ${p.value}<br>`)
+                .join("");
+            document.getElementById('sumItemsList').innerHTML = selectedItems;
+            document.getElementById('sumTotal').innerText = "₹" + document.getElementById('liveTotal').innerText;
         }
 
         async function submitOrder() {
             const btn = document.getElementById('confirmBtn');
-            btn.innerText = "Submitting..."; btn.disabled = true;
-
+            btn.innerText = "Processing..."; btn.disabled = true;
             const selected = Array.from(document.querySelectorAll('.product:checked')).map(p => p.value).join(", ");
             const data = {
                 name: document.getElementById('custName').value,
@@ -229,18 +277,8 @@
                 rId: document.getElementById('recId').value,
                 rPhone: document.getElementById('recPhone').value
             };
-
-            try {
-                await fetch(SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify(data) 
-                });
-            } catch (error) {
-                console.log("Submission sent.");
-            } finally {
-                nextPage(4);
-            }
+            try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }); } 
+            finally { nextPage(5); }
         }
     </script>
 </body>
