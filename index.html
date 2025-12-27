@@ -7,118 +7,138 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        body { 
-            font-family: 'Quicksand', sans-serif; 
-            padding: 20px; 
-            max-width: 500px; 
-            margin: auto; 
-            background: linear-gradient(135deg, #FFD700 0%, #20b2aa 100%);
-            background-attachment: fixed;
-            color: #2d3436; 
-        }
+    body { 
+        font-family: 'Quicksand', sans-serif; 
+        padding: 20px; 
+        max-width: 500px; 
+        margin: auto; 
+        background: linear-gradient(135deg, #006266 0%, #55efc4 50%, #ffeaa7 100%);
+        background-attachment: fixed;
+        color: #2d3436; 
+    }
 
-        .page { 
-            display: none; 
-            background: rgba(255, 255, 255, 0.98); 
-            padding: 30px; 
-            border-radius: 25px; 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); 
-        }
+    .page { 
+        display: none; 
+        background: rgba(255, 255, 255, 0.96); 
+        padding: 30px; 
+        border-radius: 25px; 
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); 
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
 
-        .active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .active { display: block; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .artistic-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8em;
-            color: #b8860b;
-            text-align: center;
-            margin-bottom: 10px;
-            display: block;
-        }
+    .artistic-title {
+        font-family: 'Dancing Script', cursive;
+        font-size: 2.8em;
+        color: #006266; 
+        text-align: center;
+        margin-bottom: 10px;
+        display: block;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
 
-        .story-container {
-            background: #f1f2f6;
-            border-left: 5px solid #20b2aa;
-            padding: 20px;
-            margin: 20px 0;
-            min-height: 140px;
-            font-style: italic;
-            color: #444;
-            line-height: 1.6;
-            border-radius: 10px;
-        }
+    .story-container {
+        background: #f8fcfb;
+        border-left: 5px solid #fdcb6e; 
+        padding: 20px;
+        margin: 20px 0;
+        min-height: 140px;
+        font-style: italic;
+        color: #444;
+        line-height: 1.6;
+        border-radius: 12px;
+    }
 
-        /* Quantity Selector Styling */
-        .qty-controls {
-            display: none; /* Hidden until item is checked */
-            align-items: center;
-            gap: 10px;
-            background: #f1f2f6;
-            padding: 5px 10px;
-            border-radius: 20px;
-            margin-left: 10px;
-        }
-        .qty-btn {
-            background: #20b2aa;
-            color: white;
-            border: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-            box-shadow: none;
-        }
-        .qty-val { font-weight: 700; min-width: 15px; text-align: center; }
+    .qty-controls {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        background: #e0f7f1;
+        padding: 5px 12px;
+        border-radius: 20px;
+        margin-left: 10px;
+    }
+    .qty-btn {
+        background: #006266;
+        color: white;
+        border: none;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .qty-val { font-weight: 700; color: #006266; }
 
-        .summary-box {
-            background: #fdfdfd;
-            border: 2px dashed #20b2aa;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 15px 0;
-        }
+    .summary-box {
+        background: #ffffff;
+        border: 2px dashed #55efc4; /* Mint Green Border */
+        padding: 20px;
+        border-radius: 15px;
+        margin: 15px 0;
+    }
 
-        .summary-section-title {
-            font-weight: 700;
-            color: #20b2aa;
-            text-transform: uppercase;
-            font-size: 0.8em;
-            letter-spacing: 1px;
-            margin-top: 10px;
-            display: block;
-        }
+    .summary-section-title {
+        font-weight: 700;
+        color: #006266;
+        text-transform: uppercase;
+        font-size: 0.85em;
+        letter-spacing: 1px;
+        margin-top: 10px;
+        display: block;
+    }
 
-        .summary-text { font-size: 1em; margin-bottom: 10px; display: block; }
-        h2 { color: #20b2aa; text-align: center; font-weight: 700; margin-top: 0; }
-        input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #dfe6e9; border-radius: 12px; box-sizing: border-box; }
-        
-        button { 
-            width: 100%; padding: 16px; margin: 10px 0; background: #20b2aa; color: white; 
-            border: none; border-radius: 12px; font-weight: 600; font-size: 1.1em; cursor: pointer; 
-            transition: 0.3s; box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
-        }
-        button:hover { background: #1a938c; transform: scale(1.02); }
-        .back-btn { background: #daa520 !important; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2) !important; }
+    h2 { color: #006266; text-align: center; font-weight: 700; margin-top: 0; }
+    
+    input[type="text"], input[type="tel"] { 
+        width: 100%; padding: 14px; margin: 10px 0; 
+        border: 2px solid #e0e0e0; border-radius: 12px; 
+        box-sizing: border-box; 
+    }
+    
+    input:focus {
+        border-color: #55efc4;
+        outline: none;
+    }
 
-        .item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
-        .prod-img { width: 65px; height: 65px; border-radius: 12px; margin-right: 15px; object-fit: cover; background: #dfe6e9; border: 2px solid #FFF; }
-        
-        .price-footer { 
-            background: #fff; border-top: 2px solid #FFD700; padding: 15px; 
-            margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
-        .total-amount { color: #20b2aa; font-weight: 700; font-size: 1.3em; }
-        .error-text { color: #d63031; font-size: 0.85em; display: none; margin-top: -5px; }
-        .product { width: 22px; height: 22px; cursor: pointer; accent-color: #20b2aa; }
-    </style>
+    button { 
+        width: 100%; padding: 16px; margin: 10px 0; 
+        background: #006266; color: white; 
+        border: none; border-radius: 12px; 
+        font-weight: 600; font-size: 1.1em; 
+        cursor: pointer; transition: 0.3s; 
+        box-shadow: 0 4px 15px rgba(0, 98, 102, 0.2);
+    }
+    
+    button:hover { 
+        background: #074e51; 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 20px rgba(0, 98, 102, 0.3);
+    }
+    
+    .back-btn { 
+        background: #fdcb6e !important; 
+        color: #5d4037 !important;
+        box-shadow: 0 4px 15px rgba(253, 203, 110, 0.2) !important; 
+    }
+
+    .item { border-bottom: 1px solid #f1f1f1; padding: 15px 0; }
+    
+    .price-footer { 
+        background: #fff; border-top: 3px solid #fdcb6e; padding: 15px; 
+        margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
+        display: flex; justify-content: space-between; align-items: center; 
+    }
+    
+    .total-amount { color: #006266; font-weight: 700; font-size: 1.4em; }
+    
+    .product { width: 22px; height: 22px; cursor: pointer; accent-color: #006266; }
+</style>
 </head>
 <body>
 
