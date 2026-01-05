@@ -13,11 +13,20 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
+        pass: process.env.GMAIL_PASS ? process.env.GMAIL_PASS.replace(/\s+/g, '') : '',
     },
 });
 
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
 app.post('/api/send-order-mail', async (req, res) => {
+    console.log('--- New Mail Request ---');
+    console.log('To:', req.body.to);
+    console.log('Order Details:', JSON.stringify(req.body.orderDetails, null, 2));
+
     const { to, orderDetails } = req.body;
 
     if (!to || !to.includes('@')) {
@@ -57,6 +66,6 @@ app.post('/api/send-order-mail', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`COJ Mailer Server running on http://localhost:${PORT}`);
+app.listen(PORT, '127.0.0.1', () => {
+    console.log(`COJ Mailer Server running on http://127.0.0.1:${PORT}`);
 });

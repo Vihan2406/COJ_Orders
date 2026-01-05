@@ -134,14 +134,19 @@ export const useOrderForm = () => {
 
             // 2. Trigger Auto-Mailer
             try {
-                await fetch('http://localhost:5000/api/send-order-mail', {
+                const mailResponse = await fetch('http://127.0.0.1:5000/api/send-order-mail', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(mailerData)
                 });
+
+                if (!mailResponse.ok) {
+                    const errorMsg = await mailResponse.json();
+                    throw new Error(errorMsg.error || "Mail failed");
+                }
             } catch (mailError) {
                 console.error("Auto-mailer failed, but order was recorded", mailError);
-                // We don't alert here to not disturb the user if sheet submission succeeded
+                alert("Order recorded, but confirmation email failed: " + mailError.message);
             }
 
             setStep(5); // Success step
