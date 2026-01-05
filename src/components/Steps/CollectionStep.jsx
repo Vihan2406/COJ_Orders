@@ -18,7 +18,7 @@ const CollectionStep = ({ items, cart, toggleItem, updateQty, onNext, onBack, ca
                 {items.map(item => {
                     const inCart = cart.find(i => i.id === item.id);
                     return (
-                        <div key={item.id} className="flex items-center justify-between p-4 bg-peach-50 rounded-2xl border border-peach-100 shadow-sm transition-all hover:bg-peach-100">
+                        <div key={item.id} className="flex items-center justify-between p-4 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30 shadow-sm transition-all hover:bg-white/30">
                             <div className="flex items-center gap-4">
                                 <div className="w-16 h-16 bg-gray-200 rounded-xl overflow-hidden shadow-inner">
                                     <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
@@ -59,9 +59,9 @@ const CollectionStep = ({ items, cart, toggleItem, updateQty, onNext, onBack, ca
                 })}
             </div>
 
-            <div className="flex justify-between items-center p-6 bg-white border-t-4 border-honey-400 -mx-8 -mb-8 rounded-b-3xl shadow-inner mt-4">
-                <span className="text-gray-500 font-semibold uppercase tracking-wider text-sm">Subtotal</span>
-                <span className="text-2xl font-bold text-peach-700">₹{calculateTotal()}</span>
+            <div className="flex justify-between items-center p-6 bg-white/30 backdrop-blur-xl border-t border-white/20 -mx-8 -mb-8 rounded-b-3xl shadow-inner mt-4">
+                <span className="text-amber-900/60 font-semibold uppercase tracking-wider text-sm">Subtotal</span>
+                <span className="text-2xl font-bold text-amber-900">₹{calculateTotal()}</span>
             </div>
 
             <button

@@ -5,32 +5,32 @@ const SummaryStep = ({ formData, cart, calculateTotal, onSubmit, onBack, isSubmi
         <div className="flex flex-col w-full animate-fadeIn">
             <h2 className="text-2xl font-bold font-quicksand text-peach-800 text-center mb-6">Review Order</h2>
 
-            <div className="bg-peach-50 rounded-2xl border-2 border-dashed border-peach-200 p-6 space-y-6">
+            <div className="bg-white/30 backdrop-blur-xl rounded-2xl border border-white/30 p-6 space-y-6 shadow-sm">
                 <div>
-                    <span className="block text-xs font-bold text-peach-600 uppercase tracking-widest mb-1">Purchased By</span>
-                    <span className="text-peach-900 font-semibold">{formData.custName}</span>
+                    <span className="block text-xs font-bold text-amber-800 uppercase tracking-widest mb-1">Purchased By</span>
+                    <span className="text-amber-950 font-semibold">{formData.custName}</span>
                 </div>
 
                 <div>
-                    <span className="block text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Delivery To</span>
-                    <span className="text-peach-900 font-semibold">{formData.recName}</span>
+                    <span className="block text-xs font-bold text-amber-800 uppercase tracking-widest mb-1">Delivery To</span>
+                    <span className="text-amber-950 font-semibold">{formData.recName}</span>
                 </div>
 
                 <div>
-                    <span className="block text-xs font-bold text-peach-600 uppercase tracking-widest mb-1">Selected Items</span>
+                    <span className="block text-xs font-bold text-amber-800 uppercase tracking-widest mb-1">Selected Items</span>
                     <div className="space-y-2 mt-2">
                         {cart.map(item => (
-                            <div key={item.id} className="flex justify-between items-center text-peach-900">
-                                <span>• {item.name} <span className="text-peach-600 font-bold">x{item.qty}</span></span>
+                            <div key={item.id} className="flex justify-between items-center text-amber-950">
+                                <span>• {item.name} <span className="text-amber-800 font-bold">x{item.qty}</span></span>
                                 <span className="font-semibold text-sm">₹{item.price * item.qty}</span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="pt-4 border-t border-amber-300 flex justify-between items-center">
-                    <span className="text-lg font-bold text-peach-800">Total Amount</span>
-                    <span className="text-2xl font-black text-emerald-600">₹{calculateTotal()}</span>
+                <div className="pt-4 border-t border-white/20 flex justify-between items-center">
+                    <span className="text-lg font-bold text-amber-900">Total Amount</span>
+                    <span className="text-2xl font-black text-amber-950">₹{calculateTotal()}</span>
                 </div>
             </div>
 

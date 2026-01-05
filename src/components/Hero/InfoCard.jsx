@@ -9,7 +9,7 @@ const InfoCard = ({ story, onNext }) => {
             </h1>
 
             {/* Info Card Body */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 md:p-10 shadow-xl w-full mb-8 text-amber-950">
+            <div className="bg-white/25 backdrop-blur-xl border border-white/40 rounded-2xl p-8 md:p-10 shadow-xl w-full mb-8 text-amber-950">
                 <p className="text-lg md:text-xl leading-relaxed font-medium italic">
                     {story}
                 </p>

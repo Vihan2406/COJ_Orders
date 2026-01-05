@@ -89,7 +89,7 @@ function App() {
                         {renderStep()}
                     </div>
                 ) : (
-                    <div className="w-full max-w-lg bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/20">
+                    <div className="w-full max-w-lg bg-white/25 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/40">
                         {renderStep()}
                     </div>
                 )}
