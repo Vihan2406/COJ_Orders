@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+@theme {
+  --font-fredoka: "Fredoka", sans-serif;
+  --font-quicksand: "Quicksand", sans-serif;
+  --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  /* Custom soft peach colors */
+  --color-peach-50: #fef5f1;
+  --color-peach-100: #fde8df;
+  --color-peach-200: #fcd0bf;
+  --color-peach-300: #f9b89a;
+  --color-peach-400: #f6b092;
+  --color-peach-500: #f39876;
+  --color-peach-600: #e87a55;
+  --color-peach-700: #d4623f;
+  --color-peach-800: #b04f30;
+  --color-peach-900: #8f4228;
+
+  /* Custom soft yellow/gold colors */
+  --color-honey-50: #fefbf3;
+  --color-honey-100: #fdf6e3;
+  --color-honey-200: #fbedc7;
+  --color-honey-300: #f8dfa0;
+  --color-honey-400: #f4ce6f;
+  --color-honey-500: #efbb4a;
+  --color-honey-600: #e3a63d;
+  --color-honey-700: #c88a2f;
+  --color-honey-800: #a06d29;
+  --color-honey-900: #7d5623;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-25%) translateY(-35px);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes wave-reverse {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-25%) translateY(-45px);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes cloud-float {
+  0% {
+    transform: translateX(100vw);
+  }
+
+  100% {
+    transform: translateX(-150%);
+    /* Move slightly past left edge */
+  }
+}
+
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+
+  .animate-wave-fluid-slow {
+    animation: wave 18s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+
+  .animate-wave-fluid-medium {
+    animation: wave-reverse 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+
+  .animate-wave-fluid-fast {
+    animation: wave 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+
+  .animate-cloud-slow {
+    animation: cloud-float 60s linear infinite;
+  }
+
+  .animate-cloud-medium {
+    animation: cloud-float 40s linear infinite;
+  }
+
+  .animate-cloud-fast {
+    animation: cloud-float 25s linear infinite;
+  }
+
+  .text-texture-grainy {
+    background-image: linear-gradient(to bottom, #ffffff, #fefce8), url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.25'/%3E%3C/svg%3E");
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: cover, 100px 100px;
+    background-blend-mode: overlay;
+  }
+
+  .animate-bob-slow {
+    animation: bob 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+
+  .animate-bob-medium {
+    animation: bob 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+
+  .animate-bob-fast {
+    animation: bob 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  }
+}
+
+@keyframes bob {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Custom Golden Scrollbar */
+::-webkit-scrollbar {
+  width: 12px !important;
+  height: 12px !important;
+  display: block !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #fefce8 !important;
+  /* Very light yellow */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fbbf24 !important;
+  /* Amber 400 */
+  border-radius: 6px !important;
+  border: 3px solid #fefce8 !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b !important;
+  /* Amber 500 */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fbbf24 #fefce8;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  padding: 0;
+}
