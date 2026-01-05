@@ -82,21 +82,68 @@ export const useOrderForm = () => {
         return null;
     };
 
+    const generateReceiverEmail = (id) => {
+        // ID format: 2024XXXXXXXXG
+        // Requirement: f + 1,2,3,4 + 9,10,11,12 + @goa.bits-pilani.ac.in
+        // Actually the user said: f + (first 4 digits) + 5th last + 4th last + 3rd last + 2nd last
+        // ID is like 202XXXX0456G
+        // Digit index: 0123...
+        // Last char is 'G'
+        // indices for 5th, 4th, 3rd, 2nd last are digits.
+        const cleanId = id.trim().toUpperCase();
+        const prefix = 'f';
+        const first4 = cleanId.substring(0, 4);
+        const lastDigits = cleanId.substring(cleanId.length - 5, cleanId.length - 1);
+        return `${prefix}${first4}${lastDigits}@goa.bits-pilani.ac.in`;
+    };
+
     const submitOrder = async () => {
         setIsSubmitting(true);
         const selectedStr = cart.map(item => `${item.name}(x${item.qty})`).join(", ");
-        const data = {
+        const total = calculateTotal();
+        const receiverEmail = generateReceiverEmail(formData.recId);
+
+        const sheetData = {
             name: formData.custName,
             id: formData.custId,
             phone: formData.custPhone,
-            items: selectedStr + " | Total: ₹" + calculateTotal(),
+            items: selectedStr + " | Total: ₹" + total,
             rName: formData.recName,
             rId: formData.recId,
             rPhone: formData.recPhone
         };
 
+        const mailerData = {
+            to: receiverEmail,
+            orderDetails: {
+                customerName: formData.custName,
+                customerId: formData.custId,
+                recipientName: formData.recName,
+                items: selectedStr,
+                total: total
+            }
+        };
+
         try {
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+            // 1. Submit to Google Sheets (Original Logic)
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(sheetData)
+            });
+
+            // 2. Trigger Auto-Mailer
+            try {
+                await fetch('http://localhost:5000/api/send-order-mail', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(mailerData)
+                });
+            } catch (mailError) {
+                console.error("Auto-mailer failed, but order was recorded", mailError);
+                // We don't alert here to not disturb the user if sheet submission succeeded
+            }
+
             setStep(5); // Success step
         } catch (error) {
             console.error("Order submission failed", error);
