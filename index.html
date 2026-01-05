@@ -3,142 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craft of Joy | Golden Sea Collection</title>
+    <title>Craft of Joy | Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
-    body { 
-        font-family: 'Quicksand', sans-serif; 
-        padding: 20px; 
-        max-width: 500px; 
-        margin: auto; 
-        background: linear-gradient(135deg, #006266 0%, #55efc4 50%, #ffeaa7 100%);
-        background-attachment: fixed;
-        color: #2d3436; 
-    }
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            padding: 20px; 
+            max-width: 500px; 
+            margin: auto; 
+            background: linear-gradient(135deg, #006266 0%, #55efc4 50%, #ffeaa7 100%);
+            background-attachment: fixed;
+            color: #2d3436; 
+        }
 
-    .page { 
-        display: none; 
-        background: rgba(255, 255, 255, 0.96); 
-        padding: 30px; 
-        border-radius: 25px; 
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); 
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+        .page { 
+            display: none; 
+            background: rgba(255, 255, 255, 0.96); 
+            padding: 30px; 
+            border-radius: 25px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-    .active { display: block; animation: fadeIn 0.5s; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-    .artistic-title {
-        font-family: 'Dancing Script', cursive;
-        font-size: 2.8em;
-        color: #006266; 
-        text-align: center;
-        margin-bottom: 10px;
-        display: block;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    }
+        .artistic-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8em;
+            color: #006266; 
+            text-align: center;
+            margin-bottom: 10px;
+            display: block;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
 
-    .story-container {
-        background: #f8fcfb;
-        border-left: 5px solid #fdcb6e; 
-        padding: 20px;
-        margin: 20px 0;
-        min-height: 140px;
-        font-style: italic;
-        color: #444;
-        line-height: 1.6;
-        border-radius: 12px;
-    }
+        .story-container {
+            background: #f8fcfb;
+            border-left: 5px solid #fdcb6e; 
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 140px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.6;
+            border-radius: 12px;
+        }
 
-    .qty-controls {
-        display: none;
-        align-items: center;
-        gap: 10px;
-        background: #e0f7f1;
-        padding: 5px 12px;
-        border-radius: 20px;
-        margin-left: 10px;
-    }
-    .qty-btn {
-        background: #006266;
-        color: white;
-        border: none;
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .qty-val { font-weight: 700; color: #006266; }
+        /* Improved Item Layout */
+        .item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #f1f1f1; 
+            padding: 20px 0; 
+        }
+        
+        .prod-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
 
-    .summary-box {
-        background: #ffffff;
-        border: 2px dashed #55efc4; /* Mint Green Border */
-        padding: 20px;
-        border-radius: 15px;
-        margin: 15px 0;
-    }
+        .prod-img { 
+            width: 100px; /* Bigger image space */
+            height: 100px; 
+            border-radius: 15px; 
+            margin-right: 15px; 
+            object-fit: cover; 
+            background: #dfe6e9; 
+            border: 2px solid #FFF; 
+        }
 
-    .summary-section-title {
-        font-weight: 700;
-        color: #006266;
-        text-transform: uppercase;
-        font-size: 0.85em;
-        letter-spacing: 1px;
-        margin-top: 10px;
-        display: block;
-    }
+        .prod-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    h2 { color: #006266; text-align: center; font-weight: 700; margin-top: 0; }
-    
-    input[type="text"], input[type="tel"] { 
-        width: 100%; padding: 14px; margin: 10px 0; 
-        border: 2px solid #e0e0e0; border-radius: 12px; 
-        box-sizing: border-box; 
-    }
-    
-    input:focus {
-        border-color: #55efc4;
-        outline: none;
-    }
+        /* Quantity controls at extreme right */
+        .qty-controls {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: #e0f7f1;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        .qty-btn {
+            background: #006266;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty-val { font-weight: 700; color: #006266; font-size: 0.9em; }
 
-    button { 
-        width: 100%; padding: 16px; margin: 10px 0; 
-        background: #006266; color: white; 
-        border: none; border-radius: 12px; 
-        font-weight: 600; font-size: 1.1em; 
-        cursor: pointer; transition: 0.3s; 
-        box-shadow: 0 4px 15px rgba(0, 98, 102, 0.2);
-    }
-    
-    button:hover { 
-        background: #074e51; 
-        transform: translateY(-2px); 
-        box-shadow: 0 6px 20px rgba(0, 98, 102, 0.3);
-    }
-    
-    .back-btn { 
-        background: #fdcb6e !important; 
-        color: #5d4037 !important;
-        box-shadow: 0 4px 15px rgba(253, 203, 110, 0.2) !important; 
-    }
+        .summary-box {
+            background: #ffffff;
+            border: 2px dashed #55efc4; 
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
 
-    .item { border-bottom: 1px solid #f1f1f1; padding: 15px 0; }
-    
-    .price-footer { 
-        background: #fff; border-top: 3px solid #fdcb6e; padding: 15px; 
-        margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
-        display: flex; justify-content: space-between; align-items: center; 
-    }
-    
-    .total-amount { color: #006266; font-weight: 700; font-size: 1.4em; }
-    
-    .product { width: 22px; height: 22px; cursor: pointer; accent-color: #006266; }
-</style>
+        .consent-text {
+            text-align: center;
+            font-weight: bold;
+            color: #d63031;
+            margin: 20px 0;
+            font-size: 1em;
+            display: block;
+        }
+
+        h2 { color: #006266; text-align: center; font-weight: 700; margin-top: 0; }
+        
+        input[type="text"], input[type="tel"] { 
+            width: 100%; padding: 14px; margin: 10px 0; 
+            border: 2px solid #e0e0e0; border-radius: 12px; 
+            box-sizing: border-box; 
+        }
+        
+        input:focus { border-color: #55efc4; outline: none; }
+
+        button { 
+            width: 100%; padding: 16px; margin: 10px 0; 
+            background: #006266; color: white; 
+            border: none; border-radius: 12px; 
+            font-weight: 600; font-size: 1.1em; 
+            cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 4px 15px rgba(0, 98, 102, 0.2);
+        }
+        
+        button:hover { 
+            background: #074e51; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(0, 98, 102, 0.3);
+        }
+        
+        .back-btn { 
+            background: #fdcb6e !important; 
+            color: #5d4037 !important;
+            box-shadow: 0 4px 15px rgba(253, 203, 110, 0.2) !important; 
+        }
+
+        .price-footer { 
+            background: #fff; border-top: 3px solid #fdcb6e; padding: 15px; 
+            margin: 20px -30px -30px -30px; border-radius: 0 0 25px 25px; 
+            display: flex; justify-content: space-between; align-items: center; 
+        }
+        
+        .total-amount { color: #006266; font-weight: 700; font-size: 1.4em; }
+        .product { width: 22px; height: 22px; cursor: pointer; accent-color: #006266; }
+        .error-text { display: none; } /* Hidden as per request */
+    </style>
 </head>
 <body>
 
@@ -152,9 +178,7 @@
         <h2>Your Details</h2>
         <input type="text" id="custName" placeholder="Full Name">
         <input type="text" id="custId" placeholder="ID (202XXXXXXXXXG)">
-        <div id="custIdError" class="error-text">Format required: 202XXXXXXXXXG</div>
         <input type="tel" id="custPhone" placeholder="10-Digit Phone Number">
-        <div id="custPhoneError" class="error-text">Enter a valid 10-digit number.</div>
         <button onclick="validatePage1()">Next: Shop Collection</button>
         <button onclick="nextPage(0)" class="back-btn">Back</button>
     </div>
@@ -162,41 +186,50 @@
     <div id="page2" class="page">
         <h2>Our Collection</h2>
         
-        <div class="item" id="item-row-1">
-            <div style="display:flex; align-items:center;">
+        <div class="item">
+            <div class="prod-info">
                 <img src="images/item1.jpg" class="prod-img">
-                <span><strong>Daisy Bracelet</strong><br><small>₹150</small></span>
-                <div class="qty-controls" id="qty-box-1">
-                    <button class="qty-btn" onclick="changeQty(1, -1)">-</button>
-                    <span class="qty-val" id="qty-val-1">1</span>
-                    <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
+                <div class="prod-details">
+                    <strong>Daisy Bracelet</strong><br>
+                    <small>₹150</small>
                 </div>
+            </div>
+            <div class="qty-controls" id="qty-box-1">
+                <button class="qty-btn" onclick="changeQty(1, -1)">-</button>
+                <span class="qty-val" id="qty-val-1">1</span>
+                <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
             </div>
             <input type="checkbox" class="product" data-id="1" data-price="150" value="Daisy Bracelet" onchange="toggleQty(1)">
         </div>
 
-        <div class="item" id="item-row-2">
-            <div style="display:flex; align-items:center;">
+        <div class="item">
+            <div class="prod-info">
                 <img src="images/item2.jpg" class="prod-img">
-                <span><strong>Crochet Bee</strong><br><small>₹250</small></span>
-                <div class="qty-controls" id="qty-box-2">
-                    <button class="qty-btn" onclick="changeQty(2, -1)">-</button>
-                    <span class="qty-val" id="qty-val-2">1</span>
-                    <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
+                <div class="prod-details">
+                    <strong>Crochet Bee</strong><br>
+                    <small>₹250</small>
                 </div>
+            </div>
+            <div class="qty-controls" id="qty-box-2">
+                <button class="qty-btn" onclick="changeQty(2, -1)">-</button>
+                <span class="qty-val" id="qty-val-2">1</span>
+                <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
             </div>
             <input type="checkbox" class="product" data-id="2" data-price="250" value="Crochet Bee" onchange="toggleQty(2)">
         </div>
 
-        <div class="item" id="item-row-3">
-            <div style="display:flex; align-items:center;">
+        <div class="item">
+            <div class="prod-info">
                 <img src="images/item3.jpg" class="prod-img">
-                <span><strong>Handmade Keychain</strong><br><small>₹120</small></span>
-                <div class="qty-controls" id="qty-box-3">
-                    <button class="qty-btn" onclick="changeQty(3, -1)">-</button>
-                    <span class="qty-val" id="qty-val-3">1</span>
-                    <button class="qty-btn" onclick="changeQty(3, 1)">+</button>
+                <div class="prod-details">
+                    <strong>Handmade Keychain</strong><br>
+                    <small>₹120</small>
                 </div>
+            </div>
+            <div class="qty-controls" id="qty-box-3">
+                <button class="qty-btn" onclick="changeQty(3, -1)">-</button>
+                <span class="qty-val" id="qty-val-3">1</span>
+                <button class="qty-btn" onclick="changeQty(3, 1)">+</button>
             </div>
             <input type="checkbox" class="product" data-id="3" data-price="120" value="Keychain" onchange="toggleQty(3)">
         </div>
@@ -212,10 +245,8 @@
     <div id="page3" class="page">
         <h2>Delivery Info</h2>
         <input type="text" id="recName" placeholder="Recipient Name">
-        <input type="text" id="recId" placeholder="Recipient ID/Room (202...G)">
-        <div id="recIdError" class="error-text">Format required: 202XXXXXXXXXG</div>
+        <input type="text" id="recId" placeholder="Recipient ID">
         <input type="tel" id="recPhone" placeholder="Recipient Phone">
-        <div id="recPhoneError" class="error-text">Enter a valid 10-digit number.</div>
         <button onclick="validatePage3()">Next: Final Summary</button>
         <button onclick="nextPage(2)" class="back-btn">Back</button>
     </div>
@@ -223,17 +254,18 @@
     <div id="page4" class="page">
         <h2>Review Order</h2>
         <div class="summary-box">
-            <span class="summary-section-title">Purchased By</span>
-            <span class="summary-text" id="sumCustName"></span>
-            <span class="summary-section-title">Delivery To</span>
-            <span class="summary-text" id="sumRecName"></span>
-            <span class="summary-section-title">Selected Items</span>
+            <div id="sumCustName" style="font-weight:bold; margin-bottom:5px;"></div>
+            <div id="sumRecName" style="margin-bottom:10px;"></div>
+            <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
             <div id="sumItemsList" style="margin-bottom:15px; line-height:1.5;"></div>
             <div style="border-top: 1px solid #FFD700; padding-top:10px; display:flex; justify-content:space-between; font-weight:bold; font-size:1.2em;">
                 <span>Total Amount</span>
-                <span id="sumTotal" style="color:#20b2aa;"></span>
+                <span id="sumTotal" style="color:#006266;"></span>
             </div>
         </div>
+        
+        <span class="consent-text" id="consentStatement"></span>
+
         <button id="confirmBtn" onclick="submitOrder()">Place Order & Send</button>
         <button onclick="nextPage(3)" class="back-btn">Edit Details</button>
     </div>
@@ -272,7 +304,6 @@
             window.scrollTo(0,0);
         }
 
-        // --- QUANTITY LOGIC ---
         function toggleQty(id) {
             const checkbox = document.querySelector(`.product[data-id="${id}"]`);
             const qtyBox = document.getElementById(`qty-box-${id}`);
@@ -305,11 +336,9 @@
             const id = document.getElementById('custId').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const name = document.getElementById('custName').value.trim();
-            document.getElementById('custIdError').style.display='none';
-            document.getElementById('custPhoneError').style.display='none';
             if(!name) { alert("Please enter your name."); return; }
-            if(!idRegex.test(id)) { document.getElementById('custIdError').style.display='block'; return; }
-            if(!phoneRegex.test(phone)) { document.getElementById('custPhoneError').style.display='block'; return; }
+            if(!idRegex.test(id)) { alert("Invalid ID format."); return; }
+            if(!phoneRegex.test(phone)) { alert("Enter a valid 10-digit number."); return; }
             nextPage(2);
         }
 
@@ -322,27 +351,30 @@
             const id = document.getElementById('recId').value.trim();
             const phone = document.getElementById('recPhone').value.trim();
             const name = document.getElementById('recName').value.trim();
-            document.getElementById('recIdError').style.display='none';
-            document.getElementById('recPhoneError').style.display='none';
             if(!name) { alert("Recipient name is required."); return; }
-            if(!idRegex.test(id)) { document.getElementById('recIdError').style.display='block'; return; }
-            if(!phoneRegex.test(phone)) { document.getElementById('recPhoneError').style.display='block'; return; }
+            if(!idRegex.test(id)) { alert("Invalid Recipient ID format."); return; }
+            if(!phoneRegex.test(phone)) { alert("Enter a valid 10-digit phone number."); return; }
             generateSummary();
             nextPage(4);
         }
 
         function generateSummary() {
-            document.getElementById('sumCustName').innerText = document.getElementById('custName').value;
-            document.getElementById('sumRecName').innerText = document.getElementById('recName').value;
+            const total = document.getElementById('liveTotal').innerText;
+            document.getElementById('sumCustName').innerText = "By: " + document.getElementById('custName').value;
+            document.getElementById('sumRecName').innerText = "To: " + document.getElementById('recName').value;
+            
             const selectedItems = Array.from(document.querySelectorAll('.product:checked'))
                 .map(p => {
                     const id = p.getAttribute('data-id');
                     const qty = document.getElementById(`qty-val-${id}`).innerText;
-                    return `• ${p.value} x${qty}<br>`;
-                })
-                .join("");
+                    return `• ${p.value} (x${qty})`;
+                }).join("<br>");
+            
             document.getElementById('sumItemsList').innerHTML = selectedItems;
-            document.getElementById('sumTotal').innerText = "₹" + document.getElementById('liveTotal').innerText;
+            document.getElementById('sumTotal').innerText = "₹" + total;
+            
+            // Update Consent Statement with Total
+            document.getElementById('consentStatement').innerText = "You consent to deduct ₹" + total + " from your SWD account";
         }
 
         async function submitOrder() {
