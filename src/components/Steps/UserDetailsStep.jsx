@@ -27,14 +27,13 @@ const UserDetailsStep = ({ formData, updateFormData, onNext, onBack, validate })
             <input
                 type="text"
                 placeholder="ID (202XXXXXXXXXG)"
-                className="w-full p-4 mb-1 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
+                className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
                 value={formData.custId}
                 onChange={(e) => updateFormData('custId', e.target.value)}
             />
-            <div className="text-red-500 text-sm mb-4 h-5">
+            {/* <div className="text-red-500 text-sm mb-4 h-5">
                 {errors.general?.includes('ID') && "Format required: 202XXXXXXXXXG"}
-            </div>
-
+            </div> */}
             <input
                 type="tel"
                 placeholder="10-Digit Phone Number"

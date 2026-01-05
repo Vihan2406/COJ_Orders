@@ -31,10 +31,10 @@ const DeliveryInfoStep = ({ formData, updateFormData, onNext, onBack, validate }
                 value={formData.recId}
                 onChange={(e) => updateFormData('recId', e.target.value)}
             />
-            <div className="text-red-500 text-sm mb-4 h-5">
+            {/* <div className="text-red-500 text-sm mb-4 h-5">
                 {errors.general?.includes('ID') && "Format required: 202XXXXXXXXXG"}
-            </div>
-
+            </div> */}
+            
             <input
                 type="tel"
                 placeholder="Recipient Phone"
