@@ -134,7 +134,7 @@ export const useOrderForm = () => {
 
             // 2. Trigger Auto-Mailer
             try {
-                const mailResponse = await fetch('http://127.0.0.1:5000/api/send-order-mail', {
+                const mailResponse = await fetch('/api/send-order-mail', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(mailerData)

@@ -17,6 +17,17 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+// Diagnostic logging
+console.log('Email Configuration Check:');
+console.log(`- GMAIL_USER present: ${!!process.env.GMAIL_USER}`);
+console.log(`- GMAIL_PASS present: ${!!process.env.GMAIL_PASS}`);
+if (process.env.GMAIL_USER) console.log(`- GMAIL_USER length: ${process.env.GMAIL_USER.length}`);
+if (process.env.GMAIL_PASS) console.log(`- GMAIL_PASS length: ${process.env.GMAIL_PASS.length}`);
+
+app.get('/', (req, res) => {
+    res.send('COJ Mailer Server is running');
+});
+
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
