@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3zVJFD5HXzLuRHde3Wg5Tg_1XwtrbndEuWumzuOmP2aFvdkr0TGUQneNM6MoD3j3rDw/exec';
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
@@ -132,24 +133,31 @@ export const useOrderForm = () => {
                 body: JSON.stringify(sheetData)
             });
 
-            // 2. Trigger Auto-Mailer
+            // 2. Trigger Auto-Mailer (EmailJS)
             try {
-                const mailResponse = await fetch('/api/send-order-mail', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(mailerData)
-                });
+                // Prepare template parameters
+                const templateParams = {
+                    to_name: formData.custName,
+                    to_email: receiverEmail,
+                    from_name: "Craft of Joy",
+                    message: "Thank you for your order!",
+                    order_details: selectedStr + " | Total: ₹" + total,
+                    recipient_name: formData.recName,
+                    customer_id: formData.custId,
+                    recipient_id: formData.recId
+                };
 
-                if (!mailResponse.ok) {
-                    const errorText = await mailResponse.text();
-                    console.error("Mail server error:", mailResponse.status, errorText);
-                    try {
-                        const errorMsg = JSON.parse(errorText);
-                        throw new Error(errorMsg.error || "Mail failed");
-                    } catch (e) {
-                        throw new Error(`Mail failed (${mailResponse.status}): ${errorText.substring(0, 50)}...`);
-                    }
+                const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+                const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+                const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+                if (!serviceId || !templateId || !publicKey) {
+                    throw new Error("EmailJS keys are missing in .env");
                 }
+
+                await emailjs.send(serviceId, templateId, templateParams, publicKey);
+                console.log("Email sent successfully!");
+
             } catch (mailError) {
                 console.error("Auto-mailer failed, but order was recorded", mailError);
                 alert("Order recorded, but confirmation email failed: " + mailError.message);
