@@ -141,8 +141,14 @@ export const useOrderForm = () => {
                 });
 
                 if (!mailResponse.ok) {
-                    const errorMsg = await mailResponse.json();
-                    throw new Error(errorMsg.error || "Mail failed");
+                    const errorText = await mailResponse.text();
+                    console.error("Mail server error:", mailResponse.status, errorText);
+                    try {
+                        const errorMsg = JSON.parse(errorText);
+                        throw new Error(errorMsg.error || "Mail failed");
+                    } catch (e) {
+                        throw new Error(`Mail failed (${mailResponse.status}): ${errorText.substring(0, 50)}...`);
+                    }
                 }
             } catch (mailError) {
                 console.error("Auto-mailer failed, but order was recorded", mailError);
