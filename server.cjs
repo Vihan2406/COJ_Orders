@@ -77,6 +77,12 @@ app.post('/api/send-order-mail', async (req, res) => {
     }
 });
 
-app.listen(PORT, '127.0.0.1', () => {
-    console.log(`COJ Mailer Server running on http://127.0.0.1:${PORT}`);
-});
+// Export for Vercel
+module.exports = app;
+
+// Only listen if running locally (not as a serverless function)
+if (require.main === module) {
+    app.listen(PORT, '127.0.0.1', () => {
+        console.log(`COJ Mailer Server running on http://127.0.0.1:${PORT}`);
+    });
+}
