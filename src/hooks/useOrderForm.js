@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
-const SCRIPT_URL = https://script.google.com/macros/s/AKfycbwFzOgn1JaikBUGygbBpukj2HeIdF7nORSjq_wmlU1wHKjRCjPAGtqj68o9iv-DxD0OcA/exec;
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwmYRU7tk8WBtNuzrfs_NRtVgrj8a8kGFLRbSqx1tqtFqi5IZo2DUf7h8QxMTo2xSsoQ/exec';
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
 const phoneRegex = /^[0-9]{10}$/;
 
