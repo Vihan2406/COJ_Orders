@@ -26,7 +26,7 @@ const DeliveryInfoStep = ({ formData, updateFormData, onNext, onBack, validate }
 
             <input
                 type="text"
-                placeholder="Recipient ID/Room (202...G)"
+                placeholder="Recipient ID"
                 className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
                 value={formData.recId}
                 onChange={(e) => updateFormData('recId', e.target.value)}
@@ -37,7 +37,7 @@ const DeliveryInfoStep = ({ formData, updateFormData, onNext, onBack, validate }
 
             <input
                 type="tel"
-                placeholder="Recipient Phone"
+                placeholder="Recipient Phone Number"
                 className="w-full p-4 mb-1 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
                 value={formData.recPhone}
                 onChange={(e) => updateFormData('recPhone', e.target.value)}
