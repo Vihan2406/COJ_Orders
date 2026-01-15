@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3zVJFD5HXzLuRHde3Wg5Tg_1XwtrbndEuWumzuOmP2aFvdkr0TGUQneNM6MoD3j3rDw/exec';
+const SCRIPT_URL = https://script.google.com/macros/s/AKfycbwFzOgn1JaikBUGygbBpukj2HeIdF7nORSjq_wmlU1wHKjRCjPAGtqj68o9iv-DxD0OcA/exec;
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
 const phoneRegex = /^[0-9]{10}$/;
 
@@ -24,13 +24,21 @@ export const useOrderForm = () => {
         recName: "",
         recId: "",
         recPhone: "",
+        recHostel: "", // NEW FIELD ADDED
     });
     const [cart, setCart] = useState([]);
+
+    // UPDATED: 7 items with new prices and image placeholders
     const [items] = useState([
-        { id: 1, name: "Daisy Bracelet", price: 150, img: "/images/item1.png" },
-        { id: 2, name: "Crochet Bee", price: 250, img: "/images/item2.png" },
-        { id: 3, name: "Handmade Keychain", price: 120, img: "/images/item3.png" },
+        { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/elastic_bracelet.jpg" },
+        { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/adjustable_bracelet.jpg" },
+        { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/matt_bracelet.jpg" },
+        { id: 4, name: "Crocheted flower", price: 50, img: "/images/crochet_flower.jpg" },
+        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/evil_eye.jpg" },
+        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/stuffed_evil_eye.jpg" },
+        { id: 7, name: "Phone charms", price: 70, img: "/images/phone_charm.jpg" },
     ]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -71,26 +79,20 @@ export const useOrderForm = () => {
 
     const validateUserDetails = () => {
         if (!formData.custName.trim()) return "Please enter your name.";
-        if (!idRegex.test(formData.custId.trim())) return "Format required: 202XXXXXXXXXG";
-        if (!phoneRegex.test(formData.custPhone.trim())) return "Enter a valid 10-digit number.";
+        if (!idRegex.test(formData.custId.trim())) return "Invalid ID format.";
+        if (!phoneRegex.test(formData.custPhone.trim())) return "Invalid phone number.";
         return null;
     };
 
     const validateDeliveryInfo = () => {
         if (!formData.recName.trim()) return "Recipient name is required.";
-        if (!idRegex.test(formData.recId.trim())) return "Format required: 202XXXXXXXXXG";
-        if (!phoneRegex.test(formData.recPhone.trim())) return "Enter a valid 10-digit number.";
+        if (!idRegex.test(formData.recId.trim())) return "Invalid Recipient ID.";
+        if (!formData.recHostel.trim()) return "Recipient Hostel is required."; // MANDATORY HOSTEL CHECK
+        if (!phoneRegex.test(formData.recPhone.trim())) return "Invalid phone number.";
         return null;
     };
 
     const generateReceiverEmail = (id) => {
-        // ID format: 2024XXXXXXXXG
-        // Requirement: f + 1,2,3,4 + 9,10,11,12 + @goa.bits-pilani.ac.in
-        // Actually the user said: f + (first 4 digits) + 5th last + 4th last + 3rd last + 2nd last
-        // ID is like 202XXXX0456G
-        // Digit index: 0123...
-        // Last char is 'G'
-        // indices for 5th, 4th, 3rd, 2nd last are digits.
         const cleanId = id.trim().toUpperCase();
         const prefix = 'f';
         const first4 = cleanId.substring(0, 4);
@@ -100,48 +102,44 @@ export const useOrderForm = () => {
 
     const submitOrder = async () => {
         setIsSubmitting(true);
-        const selectedStr = cart.map(item => `${item.name}(x${item.qty})`).join(", ");
         const total = calculateTotal();
         const receiverEmail = generateReceiverEmail(formData.recId);
+
+        // Map cart items to q1-q7 for the 17-column Excel structure
+        const quantities = {};
+        [1, 2, 3, 4, 5, 6, 7].forEach(id => {
+            const itemInCart = cart.find(item => item.id === id);
+            quantities[`q${id}`] = itemInCart ? itemInCart.qty : null;
+        });
 
         const sheetData = {
             name: formData.custName,
             id: formData.custId,
             phone: formData.custPhone,
-            items: selectedStr + " | Total: ₹" + total,
             rName: formData.recName,
             rId: formData.recId,
-            rPhone: formData.recPhone
-        };
-
-        const mailerData = {
-            to: receiverEmail,
-            orderDetails: {
-                customerName: formData.custName,
-                customerId: formData.custId,
-                recipientName: formData.recName,
-                items: selectedStr,
-                total: total
-            }
+            rHostel: formData.recHostel, // SENDING HOSTEL
+            rPhone: formData.recPhone,
+            ...quantities, // SPREADING q1, q2, q3, q4, q5, q6, q7
+            totalPrice: total // SENDING CALCULATED TOTAL
         };
 
         try {
-            // 1. Submit to Google Sheets (Original Logic)
+            // 1. Submit to Google Sheets
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(sheetData)
             });
 
-            // 2. Trigger Auto-Mailer (EmailJS)
+            // 2. Trigger Auto-Mailer (Optional - you can keep or remove this)
             try {
-                // Prepare template parameters
                 const templateParams = {
                     to_name: formData.custName,
                     to_email: receiverEmail,
                     from_name: "Craft of Joy",
-                    message: "Thank you for your order!",
-                    order_details: selectedStr + " | Total: ₹" + total,
+                    message: `Your order for ₹${total} has been received!`,
+                    order_details: cart.map(item => `${item.name}(x${item.qty})`).join(", "),
                     recipient_name: formData.recName,
                     customer_id: formData.custId,
                     recipient_id: formData.recId
@@ -151,16 +149,11 @@ export const useOrderForm = () => {
                 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
                 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-                if (!serviceId || !templateId || !publicKey) {
-                    throw new Error("EmailJS keys are missing in .env");
+                if (serviceId && templateId && publicKey) {
+                    await emailjs.send(serviceId, templateId, templateParams, publicKey);
                 }
-
-                await emailjs.send(serviceId, templateId, templateParams, publicKey);
-                console.log("Email sent successfully!");
-
             } catch (mailError) {
-                console.error("Auto-mailer failed, but order was recorded", mailError);
-                alert("Order recorded, but confirmation email failed: " + mailError.message);
+                console.error("Auto-mailer failed", mailError);
             }
 
             setStep(5); // Success step
