@@ -26,7 +26,7 @@ const UserDetailsStep = ({ formData, updateFormData, onNext, onBack, validate })
 
             <input
                 type="text"
-                placeholder="ID (202XXXXXXXXXG)"
+                placeholder="Enter your ID"
                 className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
                 value={formData.custId}
                 onChange={(e) => updateFormData('custId', e.target.value)}
@@ -36,7 +36,7 @@ const UserDetailsStep = ({ formData, updateFormData, onNext, onBack, validate })
             </div> */}
             <input
                 type="tel"
-                placeholder="10-Digit Phone Number"
+                placeholder="Enter Phone Number"
                 className="w-full p-4 mb-1 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
                 value={formData.custPhone}
                 onChange={(e) => updateFormData('custPhone', e.target.value)}
