@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyaM2S6jbZyDKQsda4UFVnrYh1LM6jU3iANzpnRypa6nR8mzXQVJQ_QNwf-tnPuLHZ_w/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGDGBTUYC7S5Qa8iDrEi8YUVBm76oqMOtXZ5436fj6Jzx2Zw_8C54reeEIGjx7lWWPmA/exec';
 
 export const useOrderForm = () => {
     const [step, setStep] = useState(0);
