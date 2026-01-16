@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SCRIPT_URL = 'YOUR_NEW_DEPLOYMENT_URL_HERE';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIimR1sdiCDoUkPwcjQrAk9niR6cw0oKFxAypZ1tCaLa_JYMToJpXct4pVQXe02aNaaw/exec';
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
 const phoneRegex = /^[0-9]{10}$/;
 
