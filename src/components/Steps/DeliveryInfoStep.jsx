@@ -4,16 +4,11 @@ const DeliveryInfoStep = ({ formData, updateFormData, onNext, onBack, validate }
     const [errors, setErrors] = useState({});
 
     const handleNext = () => {
-        // Local check for the Hostel field to ensure it is not null/empty
-        if (!formData.recHostel || formData.recHostel.trim() === "") {
-            setErrors({ general: "Recipient Hostel is required and cannot be empty." });
-            return;
-        }
-
         const error = validate();
         if (error) {
             setErrors({ general: error });
         } else {
+            setErrors({});
             onNext();
         }
     };

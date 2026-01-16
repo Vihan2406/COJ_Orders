@@ -28,6 +28,11 @@
   --color-honey-700: #c88a2f;
   --color-honey-800: #a06d29;
   --color-honey-900: #7d5623;
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
 @keyframes wave {
@@ -70,6 +75,10 @@
 }
 
 @layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
   .pause {
     animation-play-state: paused;
   }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNgFpxIRy_JY9xbyPycx8luR8b7-fpZsV3pTlrn9_JQ2Ix4e2QcmmMjxIkV7SNnNfc1w/exec';
 
@@ -21,45 +21,16 @@ export const useOrderForm = () => {
     const [isSaleActive, setIsSaleActive] = useState(null);
     const [isUpdatingSale, setIsUpdatingSale] = useState(false);
 
-<<<<<<< HEAD
-    const [items] = useState([
-        { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/elastic_bracelet.jpg" },
-        { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/adjustable_bracelet.jpg" },
-        { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/matt_bracelet.jpg" },
-        { id: 4, name: "Crocheted flower", price: 50, img: "/images/crochet_flower.jpg" },
-        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/evil_eye.jpg" },
-        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/stuffed_evil_eye.jpg" },
-        { id: 7, name: "Phone charms", price: 70, img: "/images/phone_charm.jpg" }
-    ]);
-
-    const submitOrder = async () => {
-        const quantities = {};
-        [1, 2, 3, 4, 5, 6, 7].forEach(id => {
-            const item = cart.find(i => i.id === id);
-            quantities[`q${id}`] = item ? item.qty : null;
-        });
-
-        const payload = { ...formData, ...quantities, totalPrice: cart.reduce((a, b) => a + (b.price * b.qty), 0) };
-
-        try {
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-            setStep(5);
-        } catch (e) { alert("Error submitting order."); }
-    };
-
-    return {
-        step, setStep, formData, updateFormData: (f, v) => setFormData(p => ({ ...p, [f]: v })), cart, items,
-        toggleItem: (item) => setCart(prev => prev.find(i => i.id === item.id) ? prev.filter(i => i.id !== item.id) : [...prev, { ...item, qty: 1 }]),
-        updateQty: (id, d) => setCart(p => p.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + d) } : i)),
-        submitOrder, nextStep: () => setStep(s => s + 1), prevStep: () => setStep(s => s - 1)
-=======
     const story = "In the heart of our campus, a group of resilient women from the Samruddhi project pour their hopes and dreams into every bead they string and every flower they crochet. These aren't just accessories; they are symbols of financial independence and reclaimed dignity. By choosing 'Crafts of Joy', you're not just buying a product; you're joining a movement of empowerment, one handmade treasure at a time.";
 
     const items = [
-        { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/elastic_bracelet.jpg" },
-        { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/adjustable_bracelet.jpg" },
-        { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/matt_bracelet.jpg" },
-        { id: 4, name: "Crocheted flower", price: 50, img: "/images/crochet_flower.jpg" }
+        { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/item1.png" },
+        { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/item2.png" },
+        { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/item3.png" },
+        { id: 4, name: "Crocheted flower", price: 50, img: "/images/item1.png" },
+        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/item2.png" },
+        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/item3.png" },
+        { id: 7, name: "Phone charms", price: 70, img: "/images/item1.png" }
     ];
 
     // Fetch Global Sale Status on mount
@@ -129,35 +100,29 @@ export const useOrderForm = () => {
     const validateUserDetails = () => {
         const { custName, custId, custPhone } = formData;
         if (!custName.trim() || !custId.trim() || !custPhone.trim()) {
-            alert("Please fill in all buyer details");
-            return false;
+            return "Please fill in all buyer details";
         }
         if (!idRegex.test(custId)) {
-            alert("Please enter a valid BITS ID (e.g., 2023A7PS0000G)");
-            return false;
+            return "Please enter a valid BITS ID (e.g., 2023A7PS0000G)";
         }
         if (!phoneRegex.test(custPhone)) {
-            alert("Please enter a valid 10-digit phone number");
-            return false;
+            return "Please enter a valid 10-digit phone number";
         }
-        return true;
+        return null; // Valid
     };
 
     const validateDeliveryInfo = () => {
         const { recName, recId, recPhone, recHostel } = formData;
         if (!recName.trim() || !recId.trim() || !recPhone.trim() || !recHostel.trim()) {
-            alert("Please fill in all recipient details");
-            return false;
+            return "Please fill in all recipient details";
         }
         if (!idRegex.test(recId)) {
-            alert("Please enter a valid BITS ID for the recipient");
-            return false;
+            return "Please enter a valid BITS ID for the recipient";
         }
         if (!phoneRegex.test(recPhone)) {
-            alert("Please enter a valid 10-digit phone number for the recipient");
-            return false;
+            return "Please enter a valid 10-digit phone number for the recipient";
         }
-        return true;
+        return null; // Valid
     };
 
     const submitOrder = async () => {
@@ -221,6 +186,5 @@ export const useOrderForm = () => {
         isSaleActive,
         toggleGlobalSale,
         isUpdatingSale
->>>>>>> a8e2cc1 (fix: restore order submission payload and complete admin dashboard)
     };
 };

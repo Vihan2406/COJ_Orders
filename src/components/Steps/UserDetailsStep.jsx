@@ -8,6 +8,7 @@ const UserDetailsStep = ({ formData, updateFormData, onNext, onBack, validate })
         if (error) {
             setErrors({ general: error });
         } else {
+            setErrors({});
             onNext();
         }
     };
