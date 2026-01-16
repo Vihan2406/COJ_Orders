@@ -44,11 +44,10 @@ const DeliveryInfoStep = ({ formData, updateFormData, onNext, onBack, validate }
             <input
                 type="text"
                 placeholder="Recipient Hostel"
-                className={`w-full p-4 mb-4 border-2 rounded-xl focus:ring-0 outline-none transition-all ${
-                    errors.general && (!formData.recHostel || formData.recHostel.trim() === "") 
-                    ? "border-red-400" 
-                    : "border-gray-100 focus:border-[#55efc4]"
-                }`}
+                className={`w-full p-4 mb-4 border-2 rounded-xl focus:ring-0 outline-none transition-all ${errors.general && (!formData.recHostel || formData.recHostel.trim() === "")
+                        ? "border-red-400"
+                        : "border-gray-100 focus:border-[#55efc4]"
+                    }`}
                 value={formData.recHostel || ''}
                 onChange={(e) => updateFormData('recHostel', e.target.value)}
             />

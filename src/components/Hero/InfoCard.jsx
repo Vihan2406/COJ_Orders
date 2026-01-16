@@ -5,7 +5,7 @@ const InfoCard = ({ story, onNext }) => {
         <div className="relative z-10 flex flex-col items-center text-center max-w-4xl w-full">
             {/* Heading */}
             <h1 className="text-[2.7rem] md:text-[3.375rem] font-bold text-white mb-12 drop-shadow-[0_5px_5px_rgba(180,83,9,0.6)] tracking-tight font-fredoka text-texture-grainy leading-tight pb-4">
-                Craft of Joy
+                Crafts of Joy
             </h1>
 
             {/* Info Card Body */}

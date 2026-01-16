@@ -6,7 +6,7 @@ const SummaryStep = ({ formData, cart, calculateTotal, onSubmit, onBack, isSubmi
     return (
         <div className="flex flex-col w-full animate-fadeIn font-quicksand">
             <h2 className="text-2xl font-bold text-[#006266] text-center mb-6">Review Order</h2>
-            
+
             <div className="bg-white/50 backdrop-blur-md rounded-2xl p-6 border-2 border-dashed border-[#55efc4] mb-6 shadow-inner">
                 {/* Customer Details */}
                 <div className="mb-4">
@@ -53,9 +53,8 @@ const SummaryStep = ({ formData, cart, calculateTotal, onSubmit, onBack, isSubmi
             <button
                 onClick={onSubmit}
                 disabled={isSubmitting}
-                className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg transition-all transform hover:-translate-y-1 ${
-                    isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#006266] hover:bg-[#074e51]'
-                }`}
+                className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg transition-all transform hover:-translate-y-1 ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#006266] hover:bg-[#074e51]'
+                    }`}
             >
                 {isSubmitting ? 'Processing...' : 'Confirm & Place Order'}
             </button>

@@ -75,7 +75,7 @@ function App() {
     return (
         <div className="relative min-h-screen w-full font-sans overflow-x-hidden">
             {/* --- FIXED BACKGROUND LAYER --- */}
-            <div className="fixed inset-0 w-full h-full overflow-hidden bg-gradient-to-b from-purple-300 via-orange-300 to-yellow-200 z-0 pointer-events-none">
+            <div className="fixed inset-0 w-full h-full overflow-hidden bg-gradient-to-b from-peach-300 via-orange-300 to-yellow-200 z-0 pointer-events-none">
                 <Sun />
                 <Clouds />
                 <Waves />
