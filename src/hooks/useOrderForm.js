@@ -39,6 +39,14 @@ export const useOrderForm = () => {
     ]);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSaleActive, setIsSaleActive] = useState(() => {
+        const saved = localStorage.getItem('coj_sale_active');
+        return saved === null ? true : saved === 'true';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('coj_sale_active', isSaleActive);
+    }, [isSaleActive]);
 
     useEffect(() => {
         setStory(stories[Math.floor(Math.random() * stories.length)]);
@@ -135,6 +143,6 @@ export const useOrderForm = () => {
     return {
         step, setStep, story, formData, updateFormData, cart, items, toggleItem, updateQty,
         calculateTotal, validateUserDetails, validateDeliveryInfo, submitOrder,
-        nextStep, prevStep, isSubmitting
+        nextStep, prevStep, isSubmitting, isSaleActive, setIsSaleActive
     };
 };

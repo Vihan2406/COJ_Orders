@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const InfoCard = ({ story, onNext }) => {
+const InfoCard = ({ story, onNext, isSaleActive = true }) => {
     const empowermentQuotes = [
         "I learned that my voice matters the moment I chose not to silence it.",
         "Strength didn’t arrive overnight — it grew every time I stood up for myself.",
@@ -51,7 +51,7 @@ const InfoCard = ({ story, onNext }) => {
                 setCurrentIndex((prev) => (prev + 1) % shuffledQuotes.length);
                 setFade(true);
             }, 500); // Wait for fade out
-        }, 15000); // Change every 15 seconds
+        }, 3000); // Change every 3 seconds
 
         return () => clearInterval(interval);
     }, [shuffledQuotes]);
@@ -90,7 +90,7 @@ const InfoCard = ({ story, onNext }) => {
                 </div>
             </div>
 
-            {/* Info Card Body */}
+            {/* Info Card Body*/}
             <div className="bg-white/25 backdrop-blur-xl border border-white/40 rounded-2xl p-8 md:p-10 shadow-xl w-full mb-8 text-amber-950">
                 <p className="text-lg md:text-xl leading-relaxed font-medium italic">
                     {story}
@@ -101,16 +101,31 @@ const InfoCard = ({ story, onNext }) => {
                     <br /><br />
                     <span className="font-bold text-amber-900 not-italic block mt-2">Order now and spread happiness!</span>
                 </p>
-            </div>
+            </div> 
 
-            {/* CTA Button */}
-            <button
-                onClick={onNext}
-                className="group relative w-full max-w-md bg-white/80 hover:bg-white text-amber-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-4 hover:scale-105 active:scale-95"
-            >
-                <span>Start Your Order</span>
-                <span className="text-2xl transition-transform group-hover:translate-x-2">→</span>
-            </button>
+            {/* CTA Button or Sales Paused Notice */}
+            {isSaleActive ? (
+                <button
+                    onClick={onNext}
+                    className="group relative w-full max-w-md bg-white/80 hover:bg-white text-amber-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-4 hover:scale-105 active:scale-95"
+                >
+                    <span>Start Your Order</span>
+                    <span className="text-2xl transition-transform group-hover:translate-x-2">→</span>
+                </button>
+            ) : (
+                <div className="w-full max-w-md bg-white/30 backdrop-blur-xl border border-white/40 rounded-3xl p-6 shadow-xl animate-in fade-in zoom-in duration-700">
+                    <div className="flex items-center justify-center gap-3 text-white mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="font-black uppercase tracking-widest text-lg">Sales Paused</span>
+                    </div>
+                    <p className="text-white/80 text-sm font-medium">
+                        We are currently catching up on orders. <br />
+                        Check back soon for more joy!
+                    </p>
+                </div>
+            )}
         </div>
     );
 };
