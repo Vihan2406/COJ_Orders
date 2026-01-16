@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIimR1sdiCDoUkPwcjQrAk9niR6cw0oKFxAypZ1tCaLa_JYMToJpXct4pVQXe02aNaaw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNgFpxIRy_JY9xbyPycx8luR8b7-fpZsV3pTlrn9_JQ2Ix4e2QcmmMjxIkV7SNnNfc1w/exec';
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
 const phoneRegex = /^[0-9]{10}$/;
 
@@ -49,9 +49,10 @@ export const useOrderForm = () => {
         }
     };
 
-    return { step, setStep, formData, updateFormData: (f, v) => setFormData(p => ({...p, [f]: v})), cart, items, 
-             toggleItem: (item) => setCart(prev => prev.find(i => i.id === item.id) ? prev.filter(i => i.id !== item.id) : [...prev, {...item, qty: 1}]),
-             updateQty: (id, d) => setCart(p => p.map(i => i.id === id ? {...i, qty: Math.max(1, i.qty + d)} : i)),
-             calculateTotal, submitOrder, nextStep: () => setStep(s => s + 1), prevStep: () => setStep(s => s - 1)
+    return {
+        step, setStep, formData, updateFormData: (f, v) => setFormData(p => ({ ...p, [f]: v })), cart, items,
+        toggleItem: (item) => setCart(prev => prev.find(i => i.id === item.id) ? prev.filter(i => i.id !== item.id) : [...prev, { ...item, qty: 1 }]),
+        updateQty: (id, d) => setCart(p => p.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + d) } : i)),
+        calculateTotal, submitOrder, nextStep: () => setStep(s => s + 1), prevStep: () => setStep(s => s - 1)
     };
 };
