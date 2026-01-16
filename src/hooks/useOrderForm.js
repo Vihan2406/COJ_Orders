@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNgFpxIRy_JY9xbyPycx8luR8b7-fpZsV3pTlrn9_JQ2Ix4e2QcmmMjxIkV7SNnNfc1w/exec';
-const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
-const phoneRegex = /^[0-9]{10}$/;
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyaM2S6jbZyDKQsda4UFVnrYh1LM6jU3iANzpnRypa6nR8mzXQVJQ_QNwf-tnPuLHZ_w/exec';
 
 export const useOrderForm = () => {
     const [step, setStep] = useState(0);
@@ -12,47 +10,34 @@ export const useOrderForm = () => {
     });
     const [cart, setCart] = useState([]);
 
-    // UPDATED: Only 4 items remain
     const [items] = useState([
         { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/elastic_bracelet.jpg" },
         { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/adjustable_bracelet.jpg" },
         { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/matt_bracelet.jpg" },
-        { id: 4, name: "Crocheted flower", price: 50, img: "/images/crochet_flower.jpg" }
+        { id: 4, name: "Crocheted flower", price: 50, img: "/images/crochet_flower.jpg" },
+        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/evil_eye.jpg" },
+        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/stuffed_evil_eye.jpg" },
+        { id: 7, name: "Phone charms", price: 70, img: "/images/phone_charm.jpg" }
     ]);
 
-    const calculateTotal = () => cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-
     const submitOrder = async () => {
-        const total = calculateTotal();
         const quantities = {};
-        // Only mapping 4 products now
-        [1, 2, 3, 4].forEach(id => {
-            const itemInCart = cart.find(item => item.id === id);
-            quantities[`q${id}`] = itemInCart ? itemInCart.qty : null;
+        [1, 2, 3, 4, 5, 6, 7].forEach(id => {
+            const item = cart.find(i => i.id === id);
+            quantities[`q${id}`] = item ? item.qty : null;
         });
 
-        const sheetData = {
-            ...formData,
-            ...quantities,
-            totalPrice: total
-        };
+        const payload = { ...formData, ...quantities, totalPrice: cart.reduce((a, b) => a + (b.price * b.qty), 0) };
 
         try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(sheetData)
-            });
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
             setStep(5);
-        } catch (error) {
-            alert("Submission failed. Please try again.");
-        }
+        } catch (e) { alert("Error submitting order."); }
     };
 
-    return {
-        step, setStep, formData, updateFormData: (f, v) => setFormData(p => ({ ...p, [f]: v })), cart, items,
-        toggleItem: (item) => setCart(prev => prev.find(i => i.id === item.id) ? prev.filter(i => i.id !== item.id) : [...prev, { ...item, qty: 1 }]),
-        updateQty: (id, d) => setCart(p => p.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + d) } : i)),
-        calculateTotal, submitOrder, nextStep: () => setStep(s => s + 1), prevStep: () => setStep(s => s - 1)
+    return { step, setStep, formData, updateFormData: (f, v) => setFormData(p => ({...p, [f]: v})), cart, items, 
+             toggleItem: (item) => setCart(prev => prev.find(i => i.id === item.id) ? prev.filter(i => i.id !== item.id) : [...prev, {...item, qty: 1}]),
+             updateQty: (id, d) => setCart(p => p.map(i => i.id === id ? {...i, qty: Math.max(1, i.qty + d)} : i)),
+             submitOrder, nextStep: () => setStep(s => s + 1), prevStep: () => setStep(s => s - 1)
     };
 };
