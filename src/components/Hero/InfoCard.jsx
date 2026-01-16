@@ -101,10 +101,10 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
                     <br /><br />
                     <span className="font-bold text-amber-900 not-italic block mt-2">Order now and spread happiness!</span>
                 </p>
-            </div> 
+            </div>
 
             {/* CTA Button or Sales Paused Notice */}
-            {isSaleActive ? (
+            {isSaleActive === true ? (
                 <button
                     onClick={onNext}
                     className="group relative w-full max-w-md bg-white/80 hover:bg-white text-amber-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-4 hover:scale-105 active:scale-95"
@@ -112,7 +112,7 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
                     <span>Start Your Order</span>
                     <span className="text-2xl transition-transform group-hover:translate-x-2">→</span>
                 </button>
-            ) : (
+            ) : isSaleActive === false ? (
                 <div className="w-full max-w-md bg-white/30 backdrop-blur-xl border border-white/40 rounded-3xl p-6 shadow-xl animate-in fade-in zoom-in duration-700">
                     <div className="flex items-center justify-center gap-3 text-white mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -124,6 +124,10 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
                         We are currently catching up on orders. <br />
                         Check back soon for more joy!
                     </p>
+                </div>
+            ) : (
+                <div className="h-16 flex items-center justify-center">
+                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 </div>
             )}
         </div>

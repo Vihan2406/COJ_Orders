@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
-const AdminPortal = ({ onBack, isSaleActive, setIsSaleActive }) => {
+const AdminPortal = ({ onBack, isSaleActive, toggleGlobalSale, isUpdatingSale }) => {
+    // ... same state ...
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
 
     const handleLogin = (e) => {
+        // ... same logic ...
         e.preventDefault();
         if (username === 'cojem' && password === 'jogw_2026_coj') {
             setIsAdmin(true);
@@ -94,8 +96,9 @@ const AdminPortal = ({ onBack, isSaleActive, setIsSaleActive }) => {
                                     <p className="text-peach-600/50 text-xs">Toggle to stop/start all orders</p>
                                 </div>
                                 <button
-                                    onClick={() => setIsSaleActive(!isSaleActive)}
-                                    className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none ${isSaleActive ? 'bg-peach-500 shadow-inner' : 'bg-gray-200'}`}
+                                    onClick={toggleGlobalSale}
+                                    disabled={isUpdatingSale}
+                                    className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none ${isSaleActive ? 'bg-peach-500 shadow-inner' : 'bg-gray-200'} ${isUpdatingSale ? 'opacity-50 cursor-wait' : ''}`}
                                 >
                                     <span
                                         className={`inline-block h-6 w-6 transform rounded-full bg-white transition-all duration-500 shadow-md ${isSaleActive ? 'translate-x-7' : 'translate-x-1'}`}
@@ -103,10 +106,13 @@ const AdminPortal = ({ onBack, isSaleActive, setIsSaleActive }) => {
                                 </button>
                             </div>
 
-                            <div className="mt-6 text-center">
+                            <div className="mt-6 text-center space-y-2">
                                 <span className={`px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest ${isSaleActive ? 'bg-green-400/20 text-green-400 border border-green-400/30' : 'bg-red-400/20 text-red-400 border border-red-400/30'}`}>
                                     {isSaleActive ? 'Sale is Live' : 'Sale is Stopped'}
                                 </span>
+                                {isUpdatingSale && (
+                                    <p className="text-peach-600/50 text-[10px] uppercase font-bold animate-pulse">Syncing with server...</p>
+                                )}
                             </div>
                         </div>
                         <button

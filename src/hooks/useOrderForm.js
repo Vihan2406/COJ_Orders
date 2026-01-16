@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwmYRU7tk8WBtNuzrfs_NRtVgrj8a8kGFLRbSqx1tqtFqi5IZo2DUf7h8QxMTo2xSsoQ/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCIcMgkwFy8K5z7fRHB1lftc96r-d7HW6rNbGT-LLYkfhnxbWn5dLBTzj4Ugnci4A4OA/exec';
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
 const phoneRegex = /^[0-9]{10}$/;
 
@@ -39,14 +39,58 @@ export const useOrderForm = () => {
     ]);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSaleActive, setIsSaleActive] = useState(() => {
-        const saved = localStorage.getItem('coj_sale_active');
-        return saved === null ? true : saved === 'true';
-    });
+    const [isSaleActive, setIsSaleActive] = useState(null);
+    const [isUpdatingSale, setIsUpdatingSale] = useState(false);
 
+    // Fetch Global Sale Status on mount
     useEffect(() => {
-        localStorage.setItem('coj_sale_active', isSaleActive);
-    }, [isSaleActive]);
+        const fetchSaleStatus = async () => {
+            console.log("Fetching global sale status...");
+            try {
+                // We add a cache-buster timestamp to ensure we get the latest sheet data
+                const res = await fetch(`${SCRIPT_URL}?action=getSaleStatus&t=${Date.now()}`);
+                if (!res.ok) throw new Error("Network response was not ok");
+
+                const data = await res.json();
+                console.log("Global sale status received:", data);
+
+                if (data && typeof data.isSaleActive === 'boolean') {
+                    setIsSaleActive(data.isSaleActive);
+                }
+            } catch (err) {
+                console.error("Critical: Failed to fetch global sale status.", err);
+                // Fallback to false if fetch fails (Safe Mode)
+                setIsSaleActive(false);
+            }
+        };
+        fetchSaleStatus();
+    }, []);
+
+    const toggleGlobalSale = async () => {
+        const newState = !isSaleActive;
+        setIsUpdatingSale(true);
+
+        try {
+            // Optimistic update
+            setIsSaleActive(newState);
+
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    action: 'toggleSale',
+                    status: newState
+                })
+            });
+        } catch (err) {
+            console.error("Failed to update global sale status:", err);
+            // Revert on error
+            setIsSaleActive(!newState);
+            alert("Failed to update global sale status. Please try again.");
+        } finally {
+            setIsUpdatingSale(false);
+        }
+    };
 
     useEffect(() => {
         setStory(stories[Math.floor(Math.random() * stories.length)]);
@@ -143,6 +187,6 @@ export const useOrderForm = () => {
     return {
         step, setStep, story, formData, updateFormData, cart, items, toggleItem, updateQty,
         calculateTotal, validateUserDetails, validateDeliveryInfo, submitOrder,
-        nextStep, prevStep, isSubmitting, isSaleActive, setIsSaleActive
+        nextStep, prevStep, isSubmitting, isSaleActive, toggleGlobalSale, isUpdatingSale
     };
 };
