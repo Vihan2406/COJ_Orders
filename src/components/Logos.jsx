@@ -2,7 +2,7 @@ import React from 'react';
 
 const Logos = () => {
     return (
-        <div className="flex gap-10 md:gap-40 justify-center items-center mb-6">
+        <div className="flex gap-10 md:gap-50 justify-center items-center mb-6">
             {/* Nirmaan Logo */}
             <a
                 href="https://www.instagram.com/nirmaangoa"
