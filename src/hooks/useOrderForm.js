@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwmYRU7tk8WBtNuzrfs_NRtVgrj8a8kGFLRbSqx1tqtFqi5IZo2DUf7h8QxMTo2xSsoQ/exec';
 const idRegex = /^202[a-zA-Z0-9]{9}G$/i;
@@ -92,18 +91,10 @@ export const useOrderForm = () => {
         return null;
     };
 
-    const generateReceiverEmail = (id) => {
-        const cleanId = id.trim().toUpperCase();
-        const prefix = 'f';
-        const first4 = cleanId.substring(0, 4);
-        const lastDigits = cleanId.substring(cleanId.length - 5, cleanId.length - 1);
-        return `${prefix}${first4}${lastDigits}@goa.bits-pilani.ac.in`;
-    };
 
     const submitOrder = async () => {
         setIsSubmitting(true);
         const total = calculateTotal();
-        const receiverEmail = generateReceiverEmail(formData.recId);
 
         // Map cart items to q1-q7 for the 17-column Excel structure
         const quantities = {};
@@ -125,36 +116,12 @@ export const useOrderForm = () => {
         };
 
         try {
-            // 1. Submit to Google Sheets
+            // Submit to Google Sheets
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(sheetData)
             });
-
-            // 2. Trigger Auto-Mailer (Optional - you can keep or remove this)
-            try {
-                const templateParams = {
-                    to_name: formData.custName,
-                    to_email: receiverEmail,
-                    from_name: "Craft of Joy",
-                    message: `Your order for ₹${total} has been received!`,
-                    order_details: cart.map(item => `${item.name}(x${item.qty})`).join(", "),
-                    recipient_name: formData.recName,
-                    customer_id: formData.custId,
-                    recipient_id: formData.recId
-                };
-
-                const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-                const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-                const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-                if (serviceId && templateId && publicKey) {
-                    await emailjs.send(serviceId, templateId, templateParams, publicKey);
-                }
-            } catch (mailError) {
-                console.error("Auto-mailer failed", mailError);
-            }
 
             setStep(5); // Success step
         } catch (error) {
