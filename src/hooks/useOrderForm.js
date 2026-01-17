@@ -27,7 +27,7 @@ export const useOrderForm = () => {
         { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/item1.png" },
         { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/item2.png" },
         { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/item3.png" },
-        { id: 4, name: "Crocheted flower", price: 50, img: "/images/item1.png" },
+        { id: 4, name: "Crocheted flower", price: 75, img: "/images/item1.png" },
         { id: 5, name: "Evil eye crochet", price: 80, img: "/images/item2.png" },
         { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/item3.png" },
         { id: 7, name: "Phone charms", price: 70, img: "/images/item1.png" }
