@@ -66,6 +66,19 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
                 Crafts of Joy
             </h1>
 
+            {/* Info Card Body*/}
+            <div className="bg-white/25 backdrop-blur-xl border border-white/40 rounded-2xl p-8 md:p-10 shadow-xl w-full mb-8 text-amber-950">
+                <p className="text-lg md:text-xl leading-relaxed font-medium italic">
+                    {story}
+                </p>
+                <div className="my-6 border-b border-amber-900/10 w-1/3 mx-auto"></div>
+                <p className="text-sm md:text-base opacity-90">
+                    Each piece in our collection is handmade with care and dedication. From bracelets to keychains, every item carries a story of craftsmanship and joy.
+                    <br /><br />
+                    <span className="font-bold text-amber-900 not-italic block mt-2">Order now and spread happiness!</span>
+                </p>
+            </div>
+
             {/* Samruddhi Women Carousel */}
             <div className="bg-white/25 backdrop-blur-xl border border-white/40 rounded-2xl p-0 shadow-xl w-full mb-8 text-amber-950 transition-all min-h-[500px] flex flex-col items-center overflow-hidden">
                 {/* Image Section - Larger Standardized Size */}
@@ -88,19 +101,6 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
                         Empowering Women, Crafting Change
                     </p>
                 </div>
-            </div>
-
-            {/* Info Card Body*/}
-            <div className="bg-white/25 backdrop-blur-xl border border-white/40 rounded-2xl p-8 md:p-10 shadow-xl w-full mb-8 text-amber-950">
-                <p className="text-lg md:text-xl leading-relaxed font-medium italic">
-                    {story}
-                </p>
-                <div className="my-6 border-b border-amber-900/10 w-1/3 mx-auto"></div>
-                <p className="text-sm md:text-base opacity-90">
-                    Each piece in our collection is handmade with care and dedication. From bracelets to keychains, every item carries a story of craftsmanship and joy.
-                    <br /><br />
-                    <span className="font-bold text-amber-900 not-italic block mt-2">Order now and spread happiness!</span>
-                </p>
             </div>
 
             {/* CTA Button or Sales Paused Notice */}
