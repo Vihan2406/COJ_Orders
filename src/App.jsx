@@ -69,7 +69,7 @@ function App() {
                     />
                 );
             case 5:
-                return <SuccessStep />;
+                return <SuccessStep formData={formData} cart={cart} calculateTotal={calculateTotal} />;
             default:
                 return <WelcomeStep story={story} onNext={nextStep} />;
         }
