@@ -24,13 +24,13 @@ export const useOrderForm = () => {
     const story = "In the heart of our campus, a group of resilient women from the Samruddhi project pour their hopes and dreams into every bead they string and every flower they crochet. These aren't just accessories; they are symbols of financial independence and reclaimed dignity. By choosing 'Crafts of Joy', you're not just buying a product; you're joining a movement of empowerment, one handmade treasure at a time.";
 
     const items = [
-        { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/item1.png" },
-        { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/item2.png" },
-        { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/item3.png" },
-        { id: 4, name: "Crocheted flower", price: 75, img: "/images/item1.png" },
-        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/item2.png" },
-        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/item3.png" },
-        { id: 7, name: "Phone charms", price: 70, img: "/images/item1.png" }
+        { id: 1, name: "Elastic colored bracelets", price: 55, img: "/images/elastic bracelet.jpeg" },
+        { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/adjustable bracelet.jpeg" },
+        { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/matt black bracelet.jpeg" },
+        { id: 4, name: "Crocheted flower", price: 75, img: "/images/crochet flower.jpeg" },
+        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/crochet flower.jpeg" },
+        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/crochet flower.jpeg" },
+        { id: 7, name: "Phone charms", price: 70, img: "/images/elastic bracelet.jpeg" }
     ];
 
     // Fetch Global Sale Status on mount
