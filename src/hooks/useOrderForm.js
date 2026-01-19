@@ -28,9 +28,9 @@ export const useOrderForm = () => {
         { id: 2, name: "Adjustable colored bracelets", price: 65, img: "/images/adjustable-bracelet.jpeg" },
         { id: 3, name: "Matt black/white bracelets", price: 70, img: "/images/matt-black-bracelet.jpeg" },
         { id: 4, name: "Crocheted flower", price: 75, img: "/images/crochet-flower.jpeg" },
-        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/crochet-flower.jpeg" },
-        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/crochet-flower.jpeg" },
-        { id: 7, name: "Phone charms", price: 70, img: "/images/elastic-bracelet.jpeg" }
+        { id: 5, name: "Evil eye crochet", price: 80, img: "/images/not available.jpeg" },
+        { id: 6, name: "Stuffed evil eye crochet", price: 150, img: "/images/stuffed evil eye crochet.jpeg" },
+        { id: 7, name: "Phone charms", price: 70, img: "/images/not available.jpeg" }
     ];
 
     // Fetch Global Sale Status on mount
