@@ -18,13 +18,22 @@ function App() {
     const {
         step, setStep, story, formData, updateFormData, cart, items, toggleItem, updateQty,
         calculateTotal, validateUserDetails, validateDeliveryInfo, submitOrder,
-        nextStep, prevStep, isSubmitting, isSaleActive, toggleGlobalSale, isUpdatingSale
+        nextStep, prevStep, isSubmitting, isSaleActive, toggleGlobalSale, isUpdatingSale,
+        isAuthenticated, login, user
     } = useOrderForm();
 
     const renderStep = () => {
         switch (step) {
             case 0:
-                return <WelcomeStep story={story} onNext={nextStep} />;
+                return (
+                    <WelcomeStep
+                        story={story}
+                        onNext={nextStep}
+                        isSaleActive={isSaleActive}
+                        isAuthenticated={isAuthenticated}
+                        onLoginSuccess={login}
+                    />
+                );
             case 1:
                 return (
                     <UserDetailsStep
@@ -100,7 +109,13 @@ function App() {
                         <Logos />
                         {step === 0 ? (
                             <div className="w-full max-w-4xl">
-                                <WelcomeStep story={story} onNext={nextStep} isSaleActive={isSaleActive} />
+                                <WelcomeStep
+                                    story={story}
+                                    onNext={nextStep}
+                                    isSaleActive={isSaleActive}
+                                    isAuthenticated={isAuthenticated}
+                                    onLoginSuccess={login}
+                                />
                             </div>
                         ) : isSaleActive === false ? (
                             <div className="w-full max-w-lg mt-20 bg-white/30 backdrop-blur-2xl rounded-3xl p-12 border border-white/40 shadow-2xl text-center animate-in fade-in slide-in-from-bottom-10 duration-700">

@@ -7,6 +7,8 @@ const phoneRegex = /^[0-9]{10}$/;
 
 export const useOrderForm = () => {
     const [step, setStep] = useState(0);
+    const [user, setUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [formData, setFormData] = useState({
         custName: "",
         custId: "",
@@ -71,6 +73,20 @@ export const useOrderForm = () => {
         } finally {
             setIsUpdatingSale(false);
         }
+    };
+
+    const login = (userData) => {
+        setUser(userData);
+        setIsAuthenticated(true);
+        // Pre-fill customer name if available from Google
+        if (userData.name) {
+            setFormData(prev => ({ ...prev, custName: userData.name }));
+        }
+    };
+
+    const logout = () => {
+        setUser(null);
+        setIsAuthenticated(false);
     };
 
     const updateFormData = (field, value) => {
@@ -145,7 +161,8 @@ export const useOrderForm = () => {
             rHostel: formData.recHostel,
             rPhone: formData.recPhone,
             ...quantities,
-            totalPrice: total
+            totalPrice: total,
+            email: user?.email // Track which Google account made the order
         };
 
         try {
@@ -163,12 +180,22 @@ export const useOrderForm = () => {
         }
     };
 
-    const nextStep = () => setStep(prev => prev + 1);
+    const nextStep = () => {
+        if (step === 0 && !isAuthenticated) {
+            // Authentication is handled in Step 0 UI
+            return;
+        }
+        setStep(prev => prev + 1);
+    };
     const prevStep = () => setStep(prev => prev - 1);
 
     return {
         step,
         setStep,
+        user,
+        isAuthenticated,
+        login,
+        logout,
         story,
         formData,
         updateFormData,

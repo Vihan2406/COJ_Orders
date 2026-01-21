@@ -20,10 +20,11 @@ const UserDetailsStep = ({ formData, updateFormData, onNext, onBack, validate })
             <input
                 type="text"
                 placeholder="Full Name"
-                className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
+                className="w-full p-4 mb-1 border-2 border-gray-100 rounded-xl focus:border-peach-400 focus:ring-0 outline-none transition-all"
                 value={formData.custName}
                 onChange={(e) => updateFormData('custName', e.target.value)}
             />
+            <p className="text-[10px] text-peach-600/60 font-medium px-2 mb-4 italic">Pre-filled from your Google Account</p>
 
             <input
                 type="text"

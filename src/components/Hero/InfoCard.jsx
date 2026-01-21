@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 
-const InfoCard = ({ story, onNext, isSaleActive = true }) => {
+const InfoCard = ({ story, onNext, isSaleActive = true, isAuthenticated, onLoginSuccess }) => {
     const empowermentQuotes = [
         "I learned that my voice matters the moment I chose not to silence it.",
         "Strength didn’t arrive overnight — it grew every time I stood up for myself.",
@@ -56,6 +57,37 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
         return () => clearInterval(interval);
     }, [shuffledQuotes]);
 
+    // Simple JWT decoder to get user info without extra libraries
+    const decodeJwt = (token) => {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            console.error("Failed to decode JWT", e);
+            return null;
+        }
+    };
+
+    const handleLoginSuccess = (credentialResponse) => {
+        const decoded = decodeJwt(credentialResponse.credential);
+        if (decoded) {
+            // Restrict to BITS Pilani Goa campus domain
+            if (decoded.email.endsWith('@goa.bits-pilani.ac.in')) {
+                onLoginSuccess({
+                    name: decoded.name,
+                    email: decoded.email,
+                    picture: decoded.picture
+                });
+            } else {
+                alert("Access Denied: Please use your university email (@goa.bits-pilani.ac.in) to place an order.");
+            }
+        }
+    };
+
     // Use current index to pick one of the 5 images (cycling)
     const currentImage = womenImages[currentIndex % womenImages.length];
 
@@ -105,13 +137,30 @@ const InfoCard = ({ story, onNext, isSaleActive = true }) => {
 
             {/* CTA Button or Sales Paused Notice */}
             {isSaleActive === true ? (
-                <button
-                    onClick={onNext}
-                    className="group relative w-full max-w-md bg-white/80 hover:bg-white text-amber-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-4 hover:scale-105 active:scale-95"
-                >
-                    <span>Start Your Order</span>
-                    <span className="text-2xl transition-transform group-hover:translate-x-2">→</span>
-                </button>
+                isAuthenticated ? (
+                    <button
+                        onClick={onNext}
+                        className="group relative w-full max-w-md bg-white/80 hover:bg-white text-amber-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-4 hover:scale-105 active:scale-95"
+                    >
+                        <span>Continue Your Order</span>
+                        <span className="text-2xl transition-transform group-hover:translate-x-2">→</span>
+                    </button>
+                ) : (
+                    <div className="flex flex-col items-center gap-4 w-full">
+                        <p className="text-white font-bold bg-amber-900/30 px-6 py-2 rounded-full backdrop-blur-sm">
+                            Please sign in with Google to start your order
+                        </p>
+                        <div className="scale-125 transform transition-transform hover:scale-130 active:scale-120">
+                            <GoogleLogin
+                                onSuccess={handleLoginSuccess}
+                                onError={() => console.log('Login Failed')}
+                                theme="filled_blue"
+                                shape="pill"
+                                text="continue_with"
+                            />
+                        </div>
+                    </div>
+                )
             ) : isSaleActive === false ? (
                 <div className="w-full max-w-md bg-white/30 backdrop-blur-xl border border-white/40 rounded-3xl p-6 shadow-xl animate-in fade-in zoom-in duration-700">
                     <div className="flex items-center justify-center gap-3 text-white mb-2">
